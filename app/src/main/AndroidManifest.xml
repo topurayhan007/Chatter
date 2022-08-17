@@ -20,6 +20,10 @@
         <activity android:name=".FriendsActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".SettingsActivity"/>
+        <activity android:name=".AccountSettingsActivity"/>
+        <activity android:name=".SecuritySettings"/>
+        <activity android:name=".UpdateProfilePicture"/>
+        <activity android:name=".ChattingActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

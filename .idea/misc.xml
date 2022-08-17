@@ -9,8 +9,12 @@
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/button_bg.xml" value="0.2035" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_at_solid.xml" value="0.2035" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_at_svg.xml" value="0.2165" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_baseline_add_photo_alternate_24.xml" value="0.232" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_baseline_arrow_back_35.xml" value="0.232" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_baseline_chat_bubble_outline_24.xml" value="0.2635" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.232" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_baseline_people_alt_24.xml" value="0.2635" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.232" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.2305" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_baseline_settings_24_pink.xml" value="0.2" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_chat.xml" value="0.2635" />
@@ -18,6 +22,10 @@
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_people_multi.xml" value="0.2635" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_people_multi_pink.xml" value="0.2305" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/main_bg.xml" value="0.2035" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/type_bg.xml" value="0.18857142857142858" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_account_settings.xml" value="0.17028985507246377" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_chatting.xml" value="0.21196581196581196" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_chatting_item.xml" value="0.21196581196581196" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_friends.xml" value="0.2111111111111111" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_friends_item.xml" value="0.2111111111111111" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_home.xml" value="0.18857142857142858" />
@@ -27,8 +35,10 @@
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_main.xml" value="0.1634963768115942" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_search.xml" value="0.2111111111111111" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_search_item.xml" value="0.2111111111111111" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_security_settings.xml" value="0.2111111111111111" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_settings.xml" value="0.17028985507246377" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_signup.xml" value="0.18342391304347827" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_update_profile_picture.xml" value="0.18931159420289856" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/fragment_dashboard.xml" value="0.20042735042735044" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/fragment_home.xml" value="0.21196581196581196" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/fragment_notifications.xml" value="0.21196581196581196" />

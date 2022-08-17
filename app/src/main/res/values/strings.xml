@@ -22,4 +22,11 @@
     <string name="search">Search</string>
     <string name="topuRayhan">Topu Rayhan</string>
     <string name="search_">Search...</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="confirm">Confirm</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="security_settings">Security Settings</string>
+    <string name="update_profile_photo">Update Profile Picture</string>
 </resources>
