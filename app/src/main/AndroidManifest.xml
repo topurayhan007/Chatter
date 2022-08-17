@@ -18,6 +18,8 @@
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".HomeActivity"/>
         <activity android:name=".FriendsActivity"/>
+        <activity android:name=".SearchActivity"/>
+        <activity android:name=".SettingsActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
