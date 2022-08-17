@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#000000"
-    tools:context=".HomeActivity">
+    tools:context=".FriendsActivity">
 
     <LinearLayout
         android:id="@+id/topNav"
@@ -47,7 +47,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:fontFamily="@font/average_sans"
-            android:text="@string/chats"
+            android:text="@string/friends"
             android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/white"/>
@@ -99,12 +99,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 tools:ignore="NestedWeights"
-                app:drawableStartCompat="@drawable/ic_chat_pink" />
+                app:drawableStartCompat="@drawable/ic_chat" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textColor="#e0017a"
+                android:textColor="@color/white"
                 android:textSize="15sp"
                 android:fontFamily="@font/average_sans"
                 android:textStyle="bold"
@@ -125,14 +125,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 tools:ignore="NestedWeights"
-                app:drawableStartCompat="@drawable/ic_people_multi" />
+                app:drawableStartCompat="@drawable/ic_people_multi_pink" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="@font/average_sans"
                 android:textStyle="bold"
-                android:textColor="@color/white"
+                android:textColor="#e0017a"
                 android:textSize="15sp"
                 android:textAlignment="center"
                 android:text="@string/friends"/>

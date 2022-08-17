@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,6 +47,53 @@ public class LoginActivity extends AppCompatActivity {
 
         signUp.setOnClickListener(view -> openSignUpActivity());
 
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Authenticate then openHomeActivity
+                openHomeActivity();
+//                private void performAuth() {
+//                    String email = emailAddress.getText().toString();
+//                    String pass = password.getText().toString();
+//
+//                    if (!email.matches(emailPattern)){
+//                        Log.d("TAG", "Enter a valid email!");
+//                        emailAddress.setError("Enter a valid email!");
+//                    }
+//                    else if (pass.isEmpty() || pass.length() < 8){
+//                        Log.d("TAG", "Enter a valid email!");
+//                        password.setError("Enter a valid password!");
+//                    }
+//                    else {
+//                        progressDialog.setMessage("Please wait...");
+//                        progressDialog.setTitle("Logging in");
+//                        progressDialog.setCanceledOnTouchOutside(false);
+//                        progressDialog.show();
+//
+//                        mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(task -> {
+//                            if (task.isSuccessful()){
+//                                progressDialog.dismiss();
+//                                // Sign in success, update UI with the signed-in user's information
+//                                Log.d("TAG", "signInWithEmail:success");
+//                                // updateUI(user);
+//                                openHomeActivity();
+//                                Toast.makeText(MainActivity.this, "Successfully logged in!", Toast.LENGTH_SHORT).show();
+//                                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+//                                vibrator.vibrate(15);
+//                            }
+//                            else{
+//                                progressDialog.dismiss();
+//                                // If sign in fails, display a message to the user.
+//                                Log.w("TAG", "signInWithEmail:failure", task.getException());
+//                                Toast.makeText(MainActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
+//                                //updateUI(null);
+//                            }
+//                        });
+//                    }
+//                }
+            }
+        });
+
         password.setOnTouchListener((view, motionEvent) -> {
             final int Right = 2;
             if(motionEvent.getAction() == MotionEvent.ACTION_UP){
@@ -69,6 +119,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public void openSignUpActivity(){
         Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(15);
+    }
+
+    public void openHomeActivity(){
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(15);

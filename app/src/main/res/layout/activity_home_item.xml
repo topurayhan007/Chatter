@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
-        android:background="#161616"
+        android:background="#030303"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         tools:ignore="UselessParent">
@@ -86,15 +86,7 @@
                     android:textColor="#CDC7C7"
                     android:textSize="15sp"
                     android:textStyle="bold" />
-
             </LinearLayout>
-
-
         </LinearLayout>
-
-
-
-
-
     </LinearLayout>
 </RelativeLayout>
