@@ -3,9 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable-v24/ic_baseline_lock_24.xml" value="0.2035" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable-v24/ic_google_icon.xml" value="0.2035" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable-v24/input_bg.xml" value="0.2035" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/button_bg.xml" value="0.2035" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_at_solid.xml" value="0.2035" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/ic_at_svg.xml" value="0.2165" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/drawable/main_bg.xml" value="0.2035" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_login.xml" value="0.18342391304347827" />
         <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_main.xml" value="0.1634963768115942" />
+        <entry key="..\:/STUDY/CSE464 (Mobile Application)/Chatter/app/src/main/res/layout/activity_signup.xml" value="0.18342391304347827" />
       </map>
     </option>
   </component>
