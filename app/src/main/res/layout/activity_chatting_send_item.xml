@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="5dp">
+    <TextView
+        android:id="@+id/sendMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/send_message_bg"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="20dp"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:text="@string/topuRayhan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="250dp"
+        app:layout_constraintWidth_percent="0.8"/>
+    <TextView
+        android:id="@+id/sendMessageTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="10sp"
+        android:textColor="#CDC7C7"
+        android:text="@string/_10_15_am"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sendMessage"
+        tools:ignore="RtlSymmetry,SmallSp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
