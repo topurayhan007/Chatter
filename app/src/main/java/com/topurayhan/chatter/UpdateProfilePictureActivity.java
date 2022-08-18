@@ -9,12 +9,12 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 
-public class AccountSettingsActivity extends AppCompatActivity {
+public class UpdateProfilePictureActivity extends AppCompatActivity {
     static AppCompatImageView backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_settings);
+        setContentView(R.layout.activity_update_profile_picture);
 
         backButton = findViewById(R.id.backButton);
 

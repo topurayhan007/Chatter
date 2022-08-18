@@ -4,62 +4,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#000000"
+    android:background="#000010"
     tools:context=".SearchActivity">
 
-    <LinearLayout
-        android:id="@+id/topNav"
+    <View
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search" />
+
+
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/input_bg"
+        android:drawableStart="@drawable/ic_baseline_search_24_pink"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/white"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:textColor="@color/white"
+        android:textColorHint="#737373"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@color/white"
+        android:hint="@string/search_"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="LabelFor,UnusedAttribute" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:padding="10dp"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+        app:layout_constraintTop_toBottomOf="@+id/search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal"
-        android:background="@color/black"
-        android:gravity="center_vertical|center_horizontal"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="RtlSymmetry">
-        <EditText
-            android:id="@+id/search"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/input_bg"
-            android:drawableStart="@drawable/ic_baseline_search_24_pink"
-            android:drawablePadding="10dp"
-            android:paddingHorizontal="10dp"
-            android:cursorVisible="true"
-            android:textCursorDrawable="@color/white"
-            android:hint="@string/search_"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:autofillHints="name"
-            android:inputType="textCapWords"
-            android:imeOptions="actionDone"
-            tools:ignore="LabelFor" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/teal_200"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
-        app:layout_constraintEnd_toEndOf="@+id/topNav"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/topNav"
-        app:layout_constraintTop_toBottomOf="@+id/topNav"
-        app:layout_constraintVertical_bias="0.02">
+        android:layout_marginBottom="10dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -78,6 +82,7 @@
 
 
         <LinearLayout
+            android:id="@+id/chatsButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -85,12 +90,12 @@
             android:clickable="true"
             android:orientation="vertical"
             android:focusable="true">
-            <TextView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 tools:ignore="NestedWeights"
-                app:drawableStartCompat="@drawable/ic_chat" />
+                android:src="@drawable/ic_chat" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -104,6 +109,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/friendsButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -111,12 +117,12 @@
             android:clickable="true"
             android:orientation="vertical"
             android:focusable="true">
-            <TextView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 tools:ignore="NestedWeights"
-                app:drawableStartCompat="@drawable/ic_people_multi" />
+                android:src="@drawable/ic_people_multi" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -129,6 +135,7 @@
                 android:text="@string/friends"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/searchButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -136,12 +143,12 @@
             android:clickable="true"
             android:orientation="vertical"
             android:focusable="true">
-            <TextView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 tools:ignore="NestedWeights"
-                app:drawableStartCompat="@drawable/ic_baseline_search_24_pink" />
+                android:src="@drawable/ic_baseline_search_24_pink" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -154,6 +161,7 @@
                 android:text="@string/search"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/settingsButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -161,12 +169,12 @@
             android:clickable="true"
             android:orientation="vertical"
             android:focusable="true">
-            <TextView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 tools:ignore="NestedWeights"
-                app:drawableStartCompat="@drawable/ic_baseline_settings_24"/>
+                android:src="@drawable/ic_baseline_settings_24"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -4,71 +4,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#000000"
+    android:background="#000010"
     tools:context=".FriendsActivity">
 
-    <LinearLayout
-        android:id="@+id/topNav"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <ImageView
+            android:id="@+id/profilePic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="TODO"
+            android:scaleType="centerCrop"
+            android:src="@drawable/avatar"
+            tools:ignore="ContentDescription,HardcodedText" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="75dp"
+        android:fontFamily="@font/average_sans"
+        android:gravity="center_vertical"
+        android:text="@string/friends"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friendsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:padding="10dp"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal"
-        android:background="@color/black"
-        android:gravity="center_vertical|center_horizontal"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="RtlSymmetry">
-        <androidx.cardview.widget.CardView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="0"
-            android:layout_marginEnd="15dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="50dp">
-            <ImageView
-                android:id="@+id/profilePic"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:contentDescription="TODO"
-                android:scaleType="centerCrop"
-                android:src="@drawable/avatar"
-                tools:ignore="ContentDescription,HardcodedText" />
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:fontFamily="@font/average_sans"
-            android:text="@string/friends"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
-
-
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/teal_200"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
-        app:layout_constraintEnd_toEndOf="@+id/topNav"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/topNav"
-        app:layout_constraintTop_toBottomOf="@+id/topNav"
-        app:layout_constraintVertical_bias="0.01">
+        android:layout_marginBottom="10dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -87,6 +94,7 @@
 
 
         <LinearLayout
+            android:id="@+id/chatsButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -94,12 +102,12 @@
             android:clickable="true"
             android:orientation="vertical"
             android:focusable="true">
-            <TextView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 tools:ignore="NestedWeights"
-                app:drawableStartCompat="@drawable/ic_chat" />
+                android:src="@drawable/ic_chat" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -113,6 +121,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/friendsButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -120,12 +129,12 @@
             android:clickable="true"
             android:orientation="vertical"
             android:focusable="true">
-            <TextView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 tools:ignore="NestedWeights"
-                app:drawableStartCompat="@drawable/ic_people_multi_pink" />
+                android:src="@drawable/ic_people_multi_pink" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -138,6 +147,7 @@
                 android:text="@string/friends"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/searchButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -145,12 +155,12 @@
             android:clickable="true"
             android:orientation="vertical"
             android:focusable="true">
-            <TextView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 tools:ignore="NestedWeights"
-                app:drawableStartCompat="@drawable/ic_baseline_search_24" />
+                android:src="@drawable/ic_baseline_search_24" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -163,6 +173,7 @@
                 android:text="@string/search"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/settingsButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -170,12 +181,12 @@
             android:clickable="true"
             android:orientation="vertical"
             android:focusable="true">
-            <TextView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 tools:ignore="NestedWeights"
-                app:drawableStartCompat="@drawable/ic_baseline_settings_24"/>
+                android:src="@drawable/ic_baseline_settings_24"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -187,7 +198,6 @@
                 android:textSize="15sp"
                 android:text="@string/settings"/>
         </LinearLayout>
-
     </LinearLayout>
 
 

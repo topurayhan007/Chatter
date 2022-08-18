@@ -1,15 +1,21 @@
 package com.topurayhan.chatter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
 
-public class SecuritySettings extends AppCompatActivity {
+public class SecuritySettingsActivity extends AppCompatActivity {
+    static AppCompatImageView backButton;
     @SuppressLint("StaticFieldLeak")
     static EditText currentPassword, newPassword, confirmPassword;
 
@@ -91,5 +97,20 @@ public class SecuritySettings extends AppCompatActivity {
             return false;
         });
 
+        backButton = findViewById(R.id.backButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goBackToSettingsActivity();
+            }
+        });
+    }
+
+    public void goBackToSettingsActivity(){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(15);
     }
 }

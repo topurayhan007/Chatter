@@ -29,4 +29,5 @@
     <string name="current_password">Current Password</string>
     <string name="security_settings">Security Settings</string>
     <string name="update_profile_photo">Update Profile Picture</string>
+    <string name="type_msg">Type your message...</string>
 </resources>
