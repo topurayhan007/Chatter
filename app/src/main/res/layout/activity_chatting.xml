@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/messageInput"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/friendName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,15 +19,16 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/backButton"
-        android:layout_width="50dp"
+        android:layout_width="40dp"
         android:layout_height="50dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:padding="5dp"
         android:src="@drawable/ic_baseline_arrow_back_35"
-        app:tint="#e0017a"/>
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#e0017a" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -60,6 +60,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
+        android:paddingLeft="5dp"
         android:fontFamily="@font/average_sans"
         android:gravity="center_vertical"
         android:text="@string/topuRayhan"
@@ -98,42 +99,45 @@
 
     <FrameLayout
         android:id="@+id/sendButton"
-        android:clickable="true"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/send_button_bg"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
+        android:background="@drawable/send_button_bg"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_baseline_send_24"/>
-    </FrameLayout>
-    <FrameLayout
-        android:id="@+id/sendPhotoButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/send_button_bg"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/sendButton">
+
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="4dp"
             android:padding="5dp"
-            android:src="@drawable/ic_baseline_add_photo_alternate_24"/>
+            android:src="@drawable/ic_baseline_send_24" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/sendPhotoButton"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/send_button_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sendButton">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="2dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_baseline_add_photo_alternate_24" />
     </FrameLayout>
 
     <EditText
         android:id="@+id/messageInput"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:background="@drawable/type_bg"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="5dp"
@@ -145,6 +149,8 @@
         android:imeOptions="actionDone"
         android:importantForAutofill="no"
         android:inputType="text"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@color/white"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:textColor="@color/white"
