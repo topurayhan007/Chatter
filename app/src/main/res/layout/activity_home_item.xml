@@ -48,17 +48,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:layout_weight="0.8">
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/friendName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/average_sans"
+                    android:paddingTop="10dp"
                     android:text="@string/topuRayhan"
                     android:textColor="@color/white"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
