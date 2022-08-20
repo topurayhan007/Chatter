@@ -42,8 +42,12 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="20"
+            android:gravity="center_vertical"
             android:orientation="vertical"
             android:paddingEnd="15dp">
 
@@ -51,10 +55,10 @@
                 android:id="@+id/friendName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="10"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:paddingBottom="6dp"
                 android:fontFamily="@font/average_sans"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:text="@string/topuRayhan"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -64,13 +68,11 @@
                 android:id="@+id/friendName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="10"
+                android:layout_weight="1"
                 android:fontFamily="@font/average_sans"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:text="@string/at_username"
                 android:textColor="@color/white"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
         </LinearLayout>
 
 
