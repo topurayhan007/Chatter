@@ -25,8 +25,8 @@
             android:id="@+id/imageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="15dp"
             app:cardCornerRadius="50dp">
 
             <ImageView
@@ -46,9 +46,10 @@
             android:fontFamily="@font/average_sans"
             android:text="@string/topuRayhan"
             android:textColor="@color/white"
+            android:layout_marginEnd="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:textSize="21sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>
