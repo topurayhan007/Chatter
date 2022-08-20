@@ -26,7 +26,7 @@
 
     <TextView
         android:id="@+id/sendMessage"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/receive_message_bg"
         android:layout_marginLeft="5dp"
@@ -37,8 +37,8 @@
         android:text="@string/topuRayhan"
         app:layout_constraintStart_toEndOf="@id/cardView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="220dp"
-        app:layout_constraintWidth_percent="0.8"/>
+        app:layout_constraintWidth_max="wrap"
+        app:layout_constraintWidth_percent="0.7"/>
     <TextView
         android:id="@+id/sendMessageTime"
         android:layout_width="0dp"
