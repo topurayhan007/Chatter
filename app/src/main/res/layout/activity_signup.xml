@@ -9,21 +9,22 @@
     android:background="#000000"
     tools:context=".SignUpActivity">
 
+
     <TextView
         android:id="@+id/signupText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/average_sans"
         android:text="@string/sign_up"
+        android:textColor="@color/white"
         android:textSize="50sp"
         android:textStyle="bold"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/name"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/name"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.10" />
+        app:layout_constraintVertical_bias="0.04" />
 
     <EditText
         android:id="@+id/name"
@@ -44,7 +45,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signupText"
-        app:layout_constraintVertical_bias="0.080"
+        app:layout_constraintVertical_bias="0.075"
         tools:ignore="UnusedAttribute" />
     <EditText
         android:id="@+id/username"
@@ -65,7 +66,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/name"
         app:layout_constraintTop_toBottomOf="@+id/name"
-        app:layout_constraintVertical_bias="0.070"
+        app:layout_constraintVertical_bias="0.050"
         tools:ignore="UnusedAttribute" />
 
     <EditText
@@ -87,7 +88,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/username"
         app:layout_constraintTop_toBottomOf="@+id/username"
-        app:layout_constraintVertical_bias="0.080"
+        app:layout_constraintVertical_bias="0.060"
         tools:ignore="UnusedAttribute" />
 
     <EditText
@@ -111,6 +112,29 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/emailAddress1"
         app:layout_constraintTop_toBottomOf="@+id/emailAddress1"
+        app:layout_constraintVertical_bias="0.080"
+        tools:ignore="UnusedAttribute" />
+    <EditText
+        android:id="@+id/password2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="password"
+        android:padding="13dp"
+        android:background="@drawable/input_bg"
+        android:drawableStart="@drawable/ic_baseline_lock_24"
+        android:drawableEnd="@drawable/ic_baseline_visibility_off_24"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/average_sans"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        android:textColorHint="#87878a"
+        android:longClickable="false"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/password1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/password1"
+        app:layout_constraintTop_toBottomOf="@+id/password1"
         app:layout_constraintVertical_bias="0.10"
         tools:ignore="UnusedAttribute" />
 
@@ -128,9 +152,9 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/password1"
-        app:layout_constraintStart_toStartOf="@+id/password1"
-        app:layout_constraintTop_toBottomOf="@+id/password1"
+        app:layout_constraintEnd_toEndOf="@+id/password2"
+        app:layout_constraintStart_toStartOf="@+id/password2"
+        app:layout_constraintTop_toBottomOf="@+id/password2"
         app:layout_constraintVertical_bias="0.090"
         tools:ignore="UnusedAttribute" />
 

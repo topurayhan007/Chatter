@@ -3,14 +3,22 @@ package com.topurayhan.chatter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.topurayhan.chatter.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+    ActivityMainBinding binding;
+
     @SuppressLint("StaticFieldLeak")
     static Button loginButton, signUpButton;
 
@@ -23,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         signUpButton = findViewById(R.id.signUpButton);
 
         loginButton.setOnClickListener(view -> openLoginActivity());
-
         signUpButton.setOnClickListener(view -> openSignUpActivity());
     }
 
