@@ -9,6 +9,8 @@
         android:id="@+id/sendMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:focusable="true"
+        android:clickable="true"
         android:background="@drawable/send_message_bg"
         android:layout_marginEnd="5dp"
         android:paddingVertical="10dp"
@@ -32,5 +34,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sendMessage"
         tools:ignore="RtlSymmetry,SmallSp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/feeling"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="invisible"
+        android:src="@drawable/haha"
+        app:layout_constraintBottom_toBottomOf="@+id/sendMessage"
+        app:layout_constraintEnd_toStartOf="@+id/sendMessage"
+        app:layout_constraintStart_toStartOf="@+id/sendMessage"
+        app:layout_constraintTop_toTopOf="@+id/sendMessage"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

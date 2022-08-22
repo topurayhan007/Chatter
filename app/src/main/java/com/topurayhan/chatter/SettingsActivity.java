@@ -109,7 +109,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if (snapshot.exists()){
                     String profileImage = snapshot.getValue(String.class);
                     Picasso.get().load(profileImage).into(binding.profilePic);
-                    binding.profilePic.setImageURI(Uri.parse(profileImage));
+                    //binding.profilePic.setImageURI(Uri.parse(profileImage));
                 }
                 else {
                     @SuppressLint("UseCompatLoadingForDrawables") Drawable d = getResources().getDrawable(avatar);
