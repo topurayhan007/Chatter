@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
     public void openSignUpActivity(){
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
+        finishAffinity();
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(15);
     }
@@ -94,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
     public void openHomeActivity(){
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+        finishAffinity();
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(15);
     }

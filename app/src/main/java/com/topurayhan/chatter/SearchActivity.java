@@ -48,6 +48,7 @@ public class SearchActivity extends AppCompatActivity {
     public void openFriendsActivity(){
         Intent intent = new Intent(this, FriendsActivity.class);
         startActivity(intent);
+        finish();
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(15);
     }
@@ -55,6 +56,7 @@ public class SearchActivity extends AppCompatActivity {
     public void openChatsActivity(){
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+        finish();
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(15);
     }
@@ -62,6 +64,7 @@ public class SearchActivity extends AppCompatActivity {
     public void openSettingsActivity(){
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+        finish();
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(15);
     }

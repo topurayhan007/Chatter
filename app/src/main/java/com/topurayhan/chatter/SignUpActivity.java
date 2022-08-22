@@ -24,14 +24,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.topurayhan.chatter.databinding.ActivitySignupBinding;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity {
     ActivitySignupBinding binding;
@@ -46,10 +48,11 @@ public class SignUpActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
+    FirebaseDatabase database;
 
     boolean passwordVisible;
     boolean passwordVisible2;
-    int error = 0; int count = 0;
+    int error = 0; boolean count = false;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+";
 
     @SuppressLint("ClickableViewAccessibility")
@@ -60,6 +63,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
         db = FirebaseFirestore.getInstance();
         progressDialog = new ProgressDialog(this);
 
@@ -121,125 +125,208 @@ public class SignUpActivity extends AppCompatActivity {
     public void openLoginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        //finishAffinity();
+        finish();
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(15);
     }
 
     private void performAuth() {
-        String fullName = binding.name.getText().toString().trim();
-        String username = binding.username.getText().toString().trim();
-        String email = emailAddress1.getText().toString().trim();
+        String fullName = binding.name.getText().toString();
+        String username = binding.username.getText().toString();
+        String email = emailAddress1.getText().toString();
         String password = password1.getText().toString();
         String confirmPassword = binding.password2.getText().toString();
 
+
+
         // Create a reference to the cities collection
-        CollectionReference usersRef = db.collection("users");
+        if (database == null) {
+            if (fullName.isEmpty()){
+                binding.name.setError("Enter a name!");
+            }
 
-        Query usernameCheck;
+            else if (username.isEmpty()){
+                binding.username.setError("Enter a username!");
+            }
 
-        if (db.collection("users") != null){
-            usernameCheck = usersRef.whereEqualTo("username", username);
-            usernameCheck.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            else if (!email.matches(emailPattern) || email.isEmpty()){
+                Log.d("TAG", "Enter a valid email!");
+                emailAddress1.setError("Enter a valid email!");
+            }
+            else if (password.isEmpty() || password.length() < 8){
+                Log.d("TAG", "Enter a valid email!");
+                password1.setError("Password should contain at least 8 characters!");
+            }
+            else if (confirmPassword.isEmpty() || confirmPassword.length() < 8){
+                Log.d("TAG", "Enter a valid email!");
+                binding.password2.setError("Password should contain at least 8 characters!");
+            }
+            else if (confirmPassword.length() >= 8 && password.length() >= 8 && !confirmPassword.matches(password)){
+                Log.d("TAG", "Passwords doesn't match!");
+                binding.password2.setError("Passwords doesn't match!");
+            }
+            else {
+                progressDialog.setMessage("Please wait...");
+                progressDialog.setTitle("Registration");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
+
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
-                        error = 0;
-                        count = task.getResult().size();
+                        progressDialog.dismiss();
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d("TAG", "createUserWithEmail:success");
 
-                        if (fullName.isEmpty()){
-                            binding.name.setError("Enter a name!");
-                        }
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String userID = user.getUid();
+                        Log.d("YES", "YES");
+                        updateDatabase(userID, fullName, username, email);
+                    }
+                    else{
+                        progressDialog.dismiss();
+                        // If sign in fails, display a message to the user.
+                        Log.d("YES", "NO");
+                        Log.w("TAG", "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(SignUpActivity.this, "Registration failed.",Toast.LENGTH_SHORT).show();
+                        //updateUI(null);
+                    }
+                });
+            }
+        }
+        else {
+            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+            usersRef.orderByChild("username").equalTo(username).addValueEventListener(new ValueEventListener(){
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot){
+                    error = 0;
+                    if (fullName.isEmpty()){
+                        binding.name.setError("Enter a name!");
+                    }
 
-                        else if (username.isEmpty()){
-                            binding.username.setError("Enter a username!");
-                        }
-                        //Username cannot be duplicate
-                        else if (count > 0){
-                            binding.username.setError("Username already taken!");
-                            error++;
-                        }
-                        else if (!email.matches(emailPattern) || email.isEmpty()){
-                            Log.d("TAG", "Enter a valid email!");
-                            emailAddress1.setError("Enter a valid email!");
-                        }
-                        else if (password.isEmpty() || password.length() < 8){
-                            Log.d("TAG", "Enter a valid email!");
-                            password1.setError("Password should contain at least 8 characters!");
-                        }
-                        else if (confirmPassword.isEmpty() || confirmPassword.length() < 8){
-                            Log.d("TAG", "Enter a valid email!");
-                            binding.password2.setError("Password should contain at least 8 characters!");
-                        }
-                        else if (confirmPassword.length() >= 8 && password.length() >= 8 && !confirmPassword.matches(password)){
-                            Log.d("TAG", "Passwords doesn't match!");
-                            binding.password2.setError("Passwords doesn't match!");
-                        }
-                        else {
-                            if (error == 0){
-                                progressDialog.setMessage("Please wait...");
-                                progressDialog.setTitle("Registration");
-                                progressDialog.setCanceledOnTouchOutside(false);
-                                progressDialog.show();
+                    else if (username.isEmpty()){
+                        binding.username.setError("Enter a username!");
+                    }
+                    //Username cannot be duplicate
+                    else if (dataSnapshot.exists()){
+                        binding.username.setError("Username already taken!");
+                        error++;
+                    }
+                    else if (!email.matches(emailPattern) || email.isEmpty()){
+                        Log.d("TAG", "Enter a valid email!");
+                        emailAddress1.setError("Enter a valid email!");
+                    }
+                    else if (password.isEmpty() || password.length() < 8){
+                        Log.d("TAG", "Enter a valid email!");
+                        password1.setError("Password should contain at least 8 characters!");
+                    }
+                    else if (confirmPassword.isEmpty() || confirmPassword.length() < 8){
+                        Log.d("TAG", "Enter a valid email!");
+                        binding.password2.setError("Password should contain at least 8 characters!");
+                    }
+                    else if (confirmPassword.length() >= 8 && password.length() >= 8 && !confirmPassword.matches(password)){
+                        Log.d("TAG", "Passwords doesn't match!");
+                        binding.password2.setError("Passwords doesn't match!");
+                    }
+                    else {
+                        if (error == 0){
+                            progressDialog.setMessage("Please wait...");
+                            progressDialog.setTitle("Registration");
+                            progressDialog.setCanceledOnTouchOutside(false);
+                            progressDialog.show();
 
-                                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task2 -> {
-                                    if (task2.isSuccessful()){
-                                        progressDialog.dismiss();
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Log.d("TAG", "createUserWithEmail:success");
+                            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task2 -> {
+                                if (task2.isSuccessful()){
+                                    progressDialog.dismiss();
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d("TAG", "createUserWithEmail:success");
 
-                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                        String userID = user.getUid();
-                                        Log.d("YES", "YES");
-                                        updateDatabase(userID, fullName, username, email);
-                                    }
-                                    else{
-                                        progressDialog.dismiss();
-                                        // If sign in fails, display a message to the user.
-                                        Log.d("YES", "NO");
-                                        Log.w("TAG", "createUserWithEmail:failure", task.getException());
-                                        Toast.makeText(SignUpActivity.this, "Registration failed.",Toast.LENGTH_SHORT).show();
-                                        //updateUI(null);
-                                    }
-                                });
-                            }
+                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                    String userID = user.getUid();
+                                    Log.d("YES", "YESCheck");
+                                    updateDatabase(userID, fullName, username, email);
+                                }
+                                else{
+                                    progressDialog.dismiss();
+                                    // If sign in fails, display a message to the user.
+                                    Log.d("YES", "NO");
+                                    Log.w("TAG", "createUserWithEmail:failure", task2.getException());
+                                    Toast.makeText(SignUpActivity.this, "Registration failed.",Toast.LENGTH_SHORT).show();
+                                    //updateUI(null);
+                                }
+                            });
                         }
                     }
+
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
             });
         }
+
+        //DatabaseReference usersRef = database.getReference().child("users");
+
+
     }
 
     private void updateDatabase(String userID, String fullName, String username, String email) {
-        // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        Map<String, Object> friendList = new HashMap<>();
-        friendList.put("friendID", null);
-//        Map<String, Object> chat = new HashMap<>();
-//        chat.put("friendID", null);
-//        chat.put("messages", null);
+        Log.d("YES", "YESup");
+        // Create a new user
+        String profileImage = null;
+        ArrayList<String> friendList = null;
+        User user = new User(userID, fullName, username, email, profileImage, friendList);
+        Log.d("YES", String.valueOf(user));
 
-
-        user.put("fullName", fullName);
-        user.put("username", username);
-        user.put("email", email);
-        user.put("profilePic", null);
-        user.put("friendList", friendList);
-
-        // Add a new document with a generated ID
-        db.collection("users")
-            .document(userID).set(user)
-            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    openLoginActivity();
-                    Toast.makeText(SignUpActivity.this, "Successfully registered!", Toast.LENGTH_SHORT).show();
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
+        database.getReference()
+                .child("users")
+                .child(userID)
+                .setValue(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("YES", "YESLo");
+                        openLoginActivity();
+                        Toast.makeText(SignUpActivity.this, "Successfully registered!", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.w("TAG", "Error adding document", e);
+                    Toast.makeText(SignUpActivity.this, "Registration failed!", Toast.LENGTH_SHORT).show();
                 }
             });
+
+//        Map<String, Object> user = new HashMap<>();
+//        Map<String, Object> friendList = new HashMap<>();
+//        friendList.put("friendID", null);
+////        Map<String, Object> chat = new HashMap<>();
+////        chat.put("friendID", null);
+////        chat.put("messages", null);
+//
+//
+//        user.put("fullName", fullName);
+//        user.put("username", username);
+//        user.put("email", email);
+//        user.put("profilePic", null);
+//        user.put("friendList", friendList);
+//
+//        // Add a new document with a generated ID
+//        db.collection("users")
+//            .document(userID).set(user)
+//            .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                @Override
+//                public void onSuccess(Void unused) {
+//                    openLoginActivity();
+//                    Toast.makeText(SignUpActivity.this, "Successfully registered!", Toast.LENGTH_SHORT).show();
+//                }
+//            })
+//            .addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Log.w("TAG", "Error adding document", e);
+//                }
+//            });
     }
 }
