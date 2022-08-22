@@ -25,10 +25,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.topurayhan.chatter.databinding.ActivitySignupBinding;
 
@@ -51,7 +49,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     boolean passwordVisible;
     boolean passwordVisible2;
-    int counter = 0;
+    int error = 0; int count = 0;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+";
 
     @SuppressLint("ClickableViewAccessibility")
@@ -137,7 +135,7 @@ public class SignUpActivity extends AppCompatActivity {
         // Create a reference to the cities collection
         CollectionReference usersRef = db.collection("users");
 
-        Query usernameCheck = null;
+        Query usernameCheck;
 
         if (db.collection("users") != null){
             usernameCheck = usersRef.whereEqualTo("username", username);
@@ -145,63 +143,67 @@ public class SignUpActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()){
-                        counter = task.getResult().size();
+                        error = 0;
+                        count = task.getResult().size();
 
+                        if (fullName.isEmpty()){
+                            binding.name.setError("Enter a name!");
+                        }
+
+                        else if (username.isEmpty()){
+                            binding.username.setError("Enter a username!");
+                        }
+                        //Username cannot be duplicate
+                        else if (count > 0){
+                            binding.username.setError("Username already taken!");
+                            error++;
+                        }
+                        else if (!email.matches(emailPattern) || email.isEmpty()){
+                            Log.d("TAG", "Enter a valid email!");
+                            emailAddress1.setError("Enter a valid email!");
+                        }
+                        else if (password.isEmpty() || password.length() < 8){
+                            Log.d("TAG", "Enter a valid email!");
+                            password1.setError("Password should contain at least 8 characters!");
+                        }
+                        else if (confirmPassword.isEmpty() || confirmPassword.length() < 8){
+                            Log.d("TAG", "Enter a valid email!");
+                            binding.password2.setError("Password should contain at least 8 characters!");
+                        }
+                        else if (confirmPassword.length() >= 8 && password.length() >= 8 && !confirmPassword.matches(password)){
+                            Log.d("TAG", "Passwords doesn't match!");
+                            binding.password2.setError("Passwords doesn't match!");
+                        }
+                        else {
+                            if (error == 0){
+                                progressDialog.setMessage("Please wait...");
+                                progressDialog.setTitle("Registration");
+                                progressDialog.setCanceledOnTouchOutside(false);
+                                progressDialog.show();
+
+                                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task2 -> {
+                                    if (task2.isSuccessful()){
+                                        progressDialog.dismiss();
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d("TAG", "createUserWithEmail:success");
+
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                        String userID = user.getUid();
+                                        Log.d("YES", "YES");
+                                        updateDatabase(userID, fullName, username, email);
+                                    }
+                                    else{
+                                        progressDialog.dismiss();
+                                        // If sign in fails, display a message to the user.
+                                        Log.d("YES", "NO");
+                                        Log.w("TAG", "createUserWithEmail:failure", task.getException());
+                                        Toast.makeText(SignUpActivity.this, "Registration failed.",Toast.LENGTH_SHORT).show();
+                                        //updateUI(null);
+                                    }
+                                });
+                            }
+                        }
                     }
-                }
-            });
-        }
-        Log.d("YES", String.valueOf(counter));
-        if (fullName.isEmpty()){
-            binding.name.setError("Enter a name!");
-        }
-        //Username cannot be duplicate
-        else if (username.isEmpty()){
-            binding.username.setError("Enter a username!");
-        }
-        else if (counter != 0){
-            binding.username.setError("Username already taken!");
-        }
-        else if (!email.matches(emailPattern) || email.isEmpty()){
-            Log.d("TAG", "Enter a valid email!");
-            emailAddress1.setError("Enter a valid email!");
-        }
-        else if (password.isEmpty() || password.length() < 8){
-            Log.d("TAG", "Enter a valid email!");
-            password1.setError("Password should contain at least 8 characters!");
-        }
-        else if (confirmPassword.isEmpty() || confirmPassword.length() < 8){
-            Log.d("TAG", "Enter a valid email!");
-            binding.password2.setError("Password should contain at least 8 characters!");
-        }
-        else if (confirmPassword.length() >= 8 && password.length() >= 8 && !confirmPassword.matches(password)){
-            Log.d("TAG", "Passwords doesn't match!");
-            binding.password2.setError("Passwords doesn't match!");
-        }
-        else {
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setTitle("Registration");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
-
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                if (task.isSuccessful()){
-                    progressDialog.dismiss();
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("TAG", "createUserWithEmail:success");
-
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    String userID = user.getUid();
-                    Log.d("YES", "YES");
-                    updateDatabase(userID, fullName, username, email);
-                }
-                else{
-                    progressDialog.dismiss();
-                    // If sign in fails, display a message to the user.
-                    Log.d("YES", "NO");
-                    Log.w("TAG", "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(SignUpActivity.this, "Registration failed.",Toast.LENGTH_SHORT).show();
-                    //updateUI(null);
                 }
             });
         }

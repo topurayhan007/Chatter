@@ -58,7 +58,7 @@
         android:autofillHints="Full name"
         android:fontFamily="@font/average_sans"
         android:hint="@string/username"
-        android:inputType="textCapWords"
+        android:inputType="text"
         android:textColorHint="#87878a"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
