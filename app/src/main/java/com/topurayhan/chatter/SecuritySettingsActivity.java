@@ -13,8 +13,13 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.topurayhan.chatter.databinding.ActivitySecuritySettingsBinding;
 
 public class SecuritySettingsActivity extends AppCompatActivity {
+    ActivitySecuritySettingsBinding binding;
+
     static AppCompatImageView backButton;
     @SuppressLint("StaticFieldLeak")
     static EditText currentPassword, newPassword, confirmPassword;
@@ -25,11 +30,17 @@ public class SecuritySettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_security_settings);
+        binding = ActivitySecuritySettingsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         currentPassword = findViewById(R.id.currentPassword);
         newPassword = findViewById(R.id.newPassword);
         confirmPassword = findViewById(R.id.confirmPassword);
+
+        Toast.makeText(this, "Couldn't implement! Firebase Update limitation", Toast.LENGTH_LONG).show();
+        binding.currentPassword.setEnabled(false);
+        binding.newPassword.setEnabled(false);
+        binding.confirmPassword.setEnabled(false);
 
         currentPassword.setOnTouchListener((view, motionEvent) -> {
             final int Right = 2;
@@ -99,17 +110,16 @@ public class SecuritySettingsActivity extends AppCompatActivity {
 
         backButton = findViewById(R.id.backButton);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goBackToSettingsActivity();
-            }
-        });
+        binding.confirmButton.setVisibility(View.INVISIBLE);
+
+        backButton.setOnClickListener(view -> goBackToSettingsActivity());
+
     }
 
     public void goBackToSettingsActivity(){
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+        finish();
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(15);
     }

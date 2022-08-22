@@ -57,6 +57,8 @@ public class UpdateProfilePictureActivity extends AppCompatActivity{
         progressDialog = new ProgressDialog(this);
         progressDialog2 = new ProgressDialog(this);
 
+        binding.confirmButton.setVisibility(View.INVISIBLE);
+
         progressDialog.setMessage("Loading...");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -103,6 +105,7 @@ public class UpdateProfilePictureActivity extends AppCompatActivity{
             startActivityForResult(intent, 50);
             selected = true;
 
+
         });
         binding.confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +136,7 @@ public class UpdateProfilePictureActivity extends AppCompatActivity{
                                               Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                                               vibrator.vibrate(15);
                                               progressDialog2.dismiss();
+                                              binding.confirmButton.setVisibility(View.INVISIBLE);
                                           }
                                       }
                                     );
@@ -157,6 +161,7 @@ public class UpdateProfilePictureActivity extends AppCompatActivity{
             if(data.getData() != null){
                 binding.profilePic.setImageURI(data.getData());
                 profileImage = data.getData();
+                binding.confirmButton.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -164,6 +169,7 @@ public class UpdateProfilePictureActivity extends AppCompatActivity{
     public void goBackToSettingsActivity(){
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+        finish();
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(15);
     }

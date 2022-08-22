@@ -122,7 +122,19 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        binding.about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAboutActivity();
+            }
+        });
+    }
 
+    public void openAboutActivity(){
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(15);
     }
 
     public void openLoginActivity(){
