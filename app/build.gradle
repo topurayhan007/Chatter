@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.topurayhan.chatter"
-        minSdk 18
+        minSdk 19
         targetSdk 32
         versionCode 1
         versionName "1.0"
