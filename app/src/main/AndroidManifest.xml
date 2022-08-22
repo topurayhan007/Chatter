@@ -16,20 +16,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chatter"
         tools:targetApi="31">
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".SignUpActivity"/>
-        <activity android:name=".HomeActivity"/>
-        <activity android:name=".FriendsActivity"/>
-        <activity android:name=".SearchActivity"/>
-        <activity android:name=".SettingsActivity"/>
-        <activity android:name=".AccountSettingsActivity"/>
-        <activity android:name=".SecuritySettingsActivity"/>
-        <activity android:name=".UpdateProfilePictureActivity"/>
-        <activity android:name=".ChattingActivity"/>
-        <activity android:name=".AboutActivity"/>
+        <activity android:name=".LoginActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".SignUpActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".HomeActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".FriendsActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".SearchActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".SettingsActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".AccountSettingsActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".SecuritySettingsActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".UpdateProfilePictureActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".ChattingActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".AboutActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:screenOrientation="portrait"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
