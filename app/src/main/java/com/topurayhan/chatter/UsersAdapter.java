@@ -1,6 +1,7 @@
 package com.topurayhan.chatter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
                 ArrayList<String> friendId = null;
                 friendId.add(user.getUserId());
                 user.setFriendList(friendId);
+                Log.d("YES", friendId.toString());
                 database.getReference().child("users").child(mAuth.getUid()).child("friendList").setValue(friendId).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

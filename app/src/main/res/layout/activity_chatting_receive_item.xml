@@ -46,7 +46,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textSize="8sp"
+        android:textSize="10sp"
         android:textColor="#CDC7C7"
         android:text="@string/_10_15_am"
         android:layout_marginEnd="4dp"
