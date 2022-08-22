@@ -10,7 +10,6 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.topurayhan.chatter.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -57,13 +55,10 @@ public class LoginActivity extends AppCompatActivity {
 
         signUp.setOnClickListener(view -> openSignUpActivity());
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Authenticate then openHomeActivity
-                //openHomeActivity();
-                performAuth();
-            }
+        loginButton.setOnClickListener(view -> {
+            // Authenticate then openHomeActivity
+            //openHomeActivity();
+            performAuth();
         });
 
         password.setOnTouchListener((view, motionEvent) -> {
