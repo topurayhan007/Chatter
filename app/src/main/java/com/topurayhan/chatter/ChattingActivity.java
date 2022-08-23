@@ -53,7 +53,7 @@ public class ChattingActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         progressDialog = new ProgressDialog(this);
 
-        progressDialog.setTitle("Uploading Image");
+        progressDialog.setTitle("Sending Image");
         progressDialog.setMessage("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
 
