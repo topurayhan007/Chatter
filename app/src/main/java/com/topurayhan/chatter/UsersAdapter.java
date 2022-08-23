@@ -20,8 +20,6 @@ import com.squareup.picasso.Picasso;
 import com.topurayhan.chatter.databinding.ActivitySearchItemBinding;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHolder>{
     FirebaseAuth mAuth;
@@ -72,11 +70,14 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
         holder.binding.addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<String> friendId = null;
+                ArrayList<String> friendId = new ArrayList<>();
                 friendId.add(user.getUserId());
                 user.setFriendList(friendId);
                 Log.d("YES", friendId.toString());
-                database.getReference().child("users").child(mAuth.getUid()).child("friendList").setValue(friendId).addOnCompleteListener(new OnCompleteListener<Void>() {
+                database.getReference().child("users")
+                        .child(mAuth.getUid())
+                        .child("friendList")
+                        .setValue(friendId).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){

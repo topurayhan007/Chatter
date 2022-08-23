@@ -1,18 +1,16 @@
 package com.topurayhan.chatter;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-
 import android.annotation.SuppressLint;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,8 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.topurayhan.chatter.databinding.ActivitySearchBinding;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class SearchActivity extends AppCompatActivity {
     ActivitySearchBinding binding;

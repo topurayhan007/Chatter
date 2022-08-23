@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="5dp">
+    android:padding="10dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -23,7 +23,7 @@
             android:contentDescription="TODO"
             android:scaleType="centerCrop"
             android:src="@drawable/avatar"
-            tools:ignore="ContentDescription,HardcodedText" />
+            tools:ignore="ContentDescription,HardcodedText,ImageContrastCheck" />
 
     </androidx.cardview.widget.CardView>
 
@@ -32,23 +32,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/receive_message_bg"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:paddingVertical="10dp"
         android:paddingHorizontal="20dp"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="17sp"
         android:text="@string/topuRayhan"
         app:layout_constraintStart_toEndOf="@id/cardView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_max="wrap"
-        app:layout_constraintWidth_percent="0.7"/>
+        app:layout_constraintWidth_percent="0.65"/>
     <TextView
         android:id="@+id/sendMessageTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textSize="10sp"
-        android:textColor="#CDC7C7"
+        android:textSize="12sp"
+        android:textColor="#757575"
         android:text="@string/_10_15_am"
         android:layout_marginEnd="4dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,9 +57,9 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/feeling"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:visibility="invisible"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:visibility="gone"
         android:src="@drawable/haha"
         app:layout_constraintBottom_toBottomOf="@+id/sendMessage"
         app:layout_constraintEnd_toEndOf="@+id/sendMessage"
