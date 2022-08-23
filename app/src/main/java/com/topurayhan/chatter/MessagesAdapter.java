@@ -138,7 +138,16 @@ public class MessagesAdapter extends RecyclerView.Adapter{
 
         if (holder.getClass().equals(SentViewHolder.class)){
             SentViewHolder viewHolder = (SentViewHolder)holder;
+
+            if (message.getMessage().equals("Photo")){
+                viewHolder.binding.image.setVisibility(View.VISIBLE);
+                viewHolder.binding.sendMessage.setVisibility(View.GONE);
+
+                Picasso.get().load(message.getImageUrl()).into(viewHolder.binding.image);
+            }
+
             viewHolder.binding.sendMessage.setText(message.getMessage());
+
 
             @SuppressLint("SimpleDateFormat")
             SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
@@ -153,7 +162,7 @@ public class MessagesAdapter extends RecyclerView.Adapter{
                 viewHolder.binding.feeling.setVisibility(View.GONE);
             }
 
-            viewHolder.binding.sendMessage.setOnTouchListener(new View.OnTouchListener() {
+            viewHolder.binding.linearLayout.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     popup.onTouch(view, motionEvent);
@@ -163,7 +172,15 @@ public class MessagesAdapter extends RecyclerView.Adapter{
         }
         else {
             ReceiveViewHolder viewHolder = (ReceiveViewHolder)holder;
+
+            if (message.getMessage().equals("Photo")){
+                viewHolder.binding.image.setVisibility(View.VISIBLE);
+                viewHolder.binding.sendMessage.setVisibility(View.GONE);
+
+                Picasso.get().load(message.getImageUrl()).into(viewHolder.binding.image);
+            }
             viewHolder.binding.sendMessage.setText(message.getMessage());
+
             @SuppressLint("SimpleDateFormat")
             SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
             long time = message.getTimestamp();
@@ -195,7 +212,7 @@ public class MessagesAdapter extends RecyclerView.Adapter{
                 viewHolder.binding.feeling.setVisibility(View.GONE);
             }
 
-            viewHolder.binding.sendMessage.setOnTouchListener(new View.OnTouchListener() {
+            viewHolder.binding.linearLayout.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     popup.onTouch(view, motionEvent);

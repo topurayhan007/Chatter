@@ -1,7 +1,7 @@
 package com.topurayhan.chatter;
 
 public class Message {
-    private String messageId, message, senderId;
+    private String messageId, message, senderId, imageUrl;
     private long timestamp;
     private int feeling = -1;
 
@@ -53,5 +53,13 @@ public class Message {
 
     public void setFeeling(int feeling) {
         this.feeling = feeling;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

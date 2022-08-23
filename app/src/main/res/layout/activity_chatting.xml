@@ -146,7 +146,7 @@
         app:layout_constraintEnd_toStartOf="@+id/sendPhotoButton"
         android:hint="@string/type_msg"
         android:importantForAutofill="no"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textCapSentences"
         android:cursorVisible="true"
         android:textCursorDrawable="@color/white"
         android:paddingStart="15dp"
