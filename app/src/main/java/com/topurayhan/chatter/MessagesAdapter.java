@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.github.pgreze.reactions.ReactionPopup;
 import com.github.pgreze.reactions.ReactionsConfig;
 import com.github.pgreze.reactions.ReactionsConfigBuilder;
@@ -25,7 +24,9 @@ import com.squareup.picasso.Picasso;
 import com.topurayhan.chatter.databinding.ActivityChattingReceiveItemBinding;
 import com.topurayhan.chatter.databinding.ActivityChattingSendItemBinding;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @SuppressWarnings("rawtypes")
 public class MessagesAdapter extends RecyclerView.Adapter{
@@ -95,15 +96,27 @@ public class MessagesAdapter extends RecyclerView.Adapter{
             if (holder.getClass().equals(SentViewHolder.class)){
                 SentViewHolder viewHolder = (SentViewHolder)holder;
 
-                viewHolder.binding.feeling.setImageResource(reactions[pos]);
-                viewHolder.binding.feeling.setVisibility(View.VISIBLE);
+                if (message.getFeeling() == pos){
+                    pos = -1;
+                    viewHolder.binding.feeling.setVisibility(View.INVISIBLE);
+                }else{
+                    viewHolder.binding.feeling.setImageResource(reactions[pos]);
+                    viewHolder.binding.feeling.setVisibility(View.VISIBLE);
+                }
             }
             else {
                 ReceiveViewHolder viewHolder = (ReceiveViewHolder) holder;
 
-                viewHolder.binding.feeling.setImageResource(reactions[pos]);
-                viewHolder.binding.feeling.setVisibility(View.VISIBLE);
+                if (message.getFeeling() == pos){
+                    pos = -1;
+                    viewHolder.binding.feeling.setVisibility(View.INVISIBLE);
+                }else{
+                    viewHolder.binding.feeling.setImageResource(reactions[pos]);
+                    viewHolder.binding.feeling.setVisibility(View.VISIBLE);
+                }
+
             }
+
             message.setFeeling(pos);
 
             FirebaseDatabase.getInstance().getReference()
@@ -127,6 +140,11 @@ public class MessagesAdapter extends RecyclerView.Adapter{
             SentViewHolder viewHolder = (SentViewHolder)holder;
             viewHolder.binding.sendMessage.setText(message.getMessage());
 
+            @SuppressLint("SimpleDateFormat")
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+            long time = message.getTimestamp();
+            viewHolder.binding.sendMessageTime.setText(dateFormat.format(new Date(time)));
+
             if(message.getFeeling() >= 0){
                 viewHolder.binding.feeling.setImageResource(reactions[message.getFeeling()]);
                 viewHolder.binding.feeling.setVisibility(View.VISIBLE);
@@ -146,6 +164,10 @@ public class MessagesAdapter extends RecyclerView.Adapter{
         else {
             ReceiveViewHolder viewHolder = (ReceiveViewHolder)holder;
             viewHolder.binding.sendMessage.setText(message.getMessage());
+            @SuppressLint("SimpleDateFormat")
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+            long time = message.getTimestamp();
+            viewHolder.binding.sendMessageTime.setText(dateFormat.format(new Date(time)));
 
             Log.d("YES", message.getSenderId());
             // received message has senderId, goto database find the user whose ID is equal

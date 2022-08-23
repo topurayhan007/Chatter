@@ -23,10 +23,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.topurayhan.chatter.databinding.ActivityHomeBinding;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends AppCompatActivity {
     ActivityHomeBinding binding;
     FirebaseAuth mAuth;
     FirebaseDatabase database;
+    ArrayList<User> users;
+    HomeAdapter homeAdapter;
 
     @SuppressLint("StaticFieldLeak")
     static LinearLayout chatsButton, friendsButton, searchButton, settingsButton;
@@ -38,6 +42,9 @@ public class HomeActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+
+        users = new ArrayList<>();
+
 
         chatsButton = findViewById(R.id.chatsButton);
         friendsButton = findViewById(R.id.friendsButton);
@@ -57,6 +64,29 @@ public class HomeActivity extends AppCompatActivity {
                     binding.profilePic.setImageDrawable(d);
                 }
             }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        homeAdapter = new HomeAdapter(this, users);
+        binding.homeRecyclerView.setAdapter(homeAdapter);
+
+        database.getReference().child("users").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                users.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                    User user = snapshot1.getValue(User.class);
+                    if(!user.getUserId().equals(mAuth.getUid())){
+                        users.add(user);
+                    }
+                }
+                homeAdapter.notifyDataSetChanged();
+            }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

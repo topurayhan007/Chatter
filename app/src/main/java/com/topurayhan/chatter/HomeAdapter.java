@@ -22,8 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-@SuppressWarnings("rawtypes")
-public class HomeAdapter extends RecyclerView.Adapter {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder> {
 
     FirebaseAuth mAuth;
     FirebaseDatabase database;
@@ -37,15 +36,16 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.activity_home_item, parent, false);
         return new HomeViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder.getClass().equals(HomeViewHolder.class)){
-            HomeViewHolder viewHolder = (HomeViewHolder) holder;
+
+
+    public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
+
+            //HomeViewHolder viewHolder = (HomeViewHolder) holder;
 
             User user = users.get(position);
             mAuth = FirebaseAuth.getInstance();
@@ -53,6 +53,20 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
             String senderId = mAuth.getUid();
             String senderRoom = senderId + user.getUserId();
+
+            holder.binding.friendName.setText(user.getName());
+            Picasso.get().load(user.getProfileImage()).into(holder.binding.friendProfilePic);
+            holder.binding.friend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ChattingActivity.class);
+                    intent.putExtra("userName", user.getName());
+                    intent.putExtra("profilePic", user.getProfileImage());
+                    intent.putExtra("userId", user.getUserId());
+                    context.startActivity(intent);
+                }
+            });
+
             database.getReference().child("chats")
                     .child(senderRoom).addValueEventListener(new ValueEventListener() {
                         @SuppressLint("SetTextI18n")
@@ -60,17 +74,17 @@ public class HomeAdapter extends RecyclerView.Adapter {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()){
                                 String lastMsg = snapshot.child("lastMsg").getValue(String.class);
-                                long time = snapshot.child("lastTime").getValue(Long.class);
+                                long time = snapshot.child("lastMsgTime").getValue(Long.class);
                                 @SuppressLint("SimpleDateFormat")
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
 
-                                ((HomeViewHolder) holder).binding.friendLastMsg.setText(lastMsg);
-                                ((HomeViewHolder) holder).binding.friendLastMsgTime.setText(dateFormat.format(new Date(time)));
+                                holder.binding.friendLastMsg.setText(lastMsg);
+                                holder.binding.friendLastMsgTime.setText(dateFormat.format(new Date(time)));
 
                             }
                             else {
-                                ((HomeViewHolder) holder).binding.friendLastMsg.setText("Tap to chat");
-                                ((HomeViewHolder) holder).binding.friendLastMsgTime.setText("");
+                                holder.binding.friendLastMsg.setText("Tap to chat");
+                                holder.binding.friendLastMsgTime.setText("");
                             }
                         }
 
@@ -80,22 +94,6 @@ public class HomeAdapter extends RecyclerView.Adapter {
                         }
 
                     });
-
-            ((HomeViewHolder) holder).binding.friendName.setText(user.getName());
-            Picasso.get().load(user.getProfileImage()).into(((HomeViewHolder) holder).binding.friendProfilePic);
-            ((HomeViewHolder) holder).binding.friend.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, HomeActivity.class);
-                    intent.putExtra("userName", user.getName());
-                    intent.putExtra("profilePic", user.getProfileImage());
-                    intent.putExtra("userId", user.getUserId());
-                    context.startActivity(intent);
-                }
-            });
-        }
-
-
     }
 
     @Override
@@ -104,9 +102,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
     }
 
     @SuppressWarnings("InnerClassMayBeStatic")
-    private class HomeViewHolder extends RecyclerView.ViewHolder {
+    protected class HomeViewHolder extends RecyclerView.ViewHolder {
         ActivityHomeItemBinding binding;
-        public HomeViewHolder(View view) {
+        public HomeViewHolder(@NonNull View view) {
             super(view);
             binding = ActivityHomeItemBinding.bind(view);
         }
