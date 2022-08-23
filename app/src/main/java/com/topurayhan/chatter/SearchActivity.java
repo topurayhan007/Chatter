@@ -119,12 +119,10 @@ public class SearchActivity extends AppCompatActivity {
                 filteredList.add(user);
             }
         }
-        if (filteredList.isEmpty()){
-            Toast.makeText(this, "No user found!", Toast.LENGTH_SHORT).show();
-        }
-        else{
+        if (!filteredList.isEmpty()){
             usersAdapter.setFilteredList(filteredList);
         }
+
     }
 
     public void openFriendsActivity(){
