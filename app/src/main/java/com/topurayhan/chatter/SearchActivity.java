@@ -2,14 +2,17 @@ package com.topurayhan.chatter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -19,7 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.topurayhan.chatter.databinding.ActivitySearchBinding;
 
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
+import java.util.Locale;
 
 public class SearchActivity extends AppCompatActivity {
     ActivitySearchBinding binding;
@@ -43,6 +47,7 @@ public class SearchActivity extends AppCompatActivity {
         usersAdapter = new UsersAdapter(this, users);
         binding.searchRecyclerView.setAdapter(usersAdapter);
 
+
         database.getReference().child("users").addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -62,6 +67,20 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        binding.search.clearFocus();
+        binding.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                fileList(newText);
+                return true;
             }
         });
 
@@ -90,6 +109,22 @@ public class SearchActivity extends AppCompatActivity {
                 openSettingsActivity();
             }
         });
+    }
+
+    private void fileList(String text) {
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+        ArrayList<User> filteredList = new ArrayList<>();
+        for (User user : users){
+            if (user.getName().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(user);
+            }
+        }
+        if (filteredList.isEmpty()){
+            Toast.makeText(this, "No user found!", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            usersAdapter.setFilteredList(filteredList);
+        }
     }
 
     public void openFriendsActivity(){

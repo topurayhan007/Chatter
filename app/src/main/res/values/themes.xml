@@ -12,5 +12,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <!--SearchView query text color-->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!--SearchView query hint text color-->
+        <item name="android:textColorHint">#737373</item>
     </style>
 </resources>

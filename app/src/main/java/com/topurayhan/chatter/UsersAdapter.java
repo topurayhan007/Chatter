@@ -1,5 +1,6 @@
 package com.topurayhan.chatter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -32,6 +33,14 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
         this.users = users;
 
     }
+
+    //For search
+    @SuppressLint("NotifyDataSetChanged")
+    public void setFilteredList(ArrayList<User> filteredList){
+        this.users = filteredList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public UsersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
