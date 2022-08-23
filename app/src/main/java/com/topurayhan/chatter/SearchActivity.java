@@ -115,7 +115,7 @@ public class SearchActivity extends AppCompatActivity {
         @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
         ArrayList<User> filteredList = new ArrayList<>();
         for (User user : users){
-            if (user.getName().toLowerCase().contains(text.toLowerCase())){
+            if (user.getName().toLowerCase().contains(text.toLowerCase()) || user.getUsername().toLowerCase().contains(text.toLowerCase())){
                 filteredList.add(user);
             }
         }
