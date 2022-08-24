@@ -8,7 +8,7 @@
    - Able to send photos
    - Able to add reactions to messages or photos
    - Able to add search new users
-   - Able to add users as friend (couldn't implement)
+   - Able to add users as friend (not implement)
    - Able to update profile picture
    - Able to update name
    - Able to update username
