@@ -4,7 +4,7 @@
 
 ### To use the app download this apk file:
 
- #### [https://github.com/topurayhan007/CalculatorApp/blob/main/APK/Chatter.apk]
+ #### [https://github.com/topurayhan007/Chatter/blob/main/APK/Chatter.apk]
  
 
 ![Screenshot 1](asset/1.jpg)
