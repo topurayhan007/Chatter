@@ -4,6 +4,9 @@
 
 ### Functionalities:
    - Able to login
+   - Login verification
+   - Signup verification
+   - Unique username verification 
    - Able to sigup using email (not verified ones)
    - Able to chat
    - Able to send photos
