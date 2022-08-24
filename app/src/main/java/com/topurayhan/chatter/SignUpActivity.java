@@ -18,22 +18,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.topurayhan.chatter.databinding.ActivitySignupBinding;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
     ActivitySignupBinding binding;
@@ -275,8 +272,10 @@ public class SignUpActivity extends AppCompatActivity {
         Log.d("YES", "YESup");
         // Create a new user
         String profileImage = null;
-        ArrayList<String> friendList = null;
-        User user = new User(userID, fullName, username, email, profileImage, friendList);
+        HashMap<String, Object> friend = new HashMap<>();
+
+        String friendList = null;
+        User user = new User(userID, fullName, username, email, profileImage);
         Log.d("YES", String.valueOf(user));
 
         database.getReference()

@@ -1,21 +1,18 @@
 package com.topurayhan.chatter;
 
-import java.util.ArrayList;
-
 public class User {
     private String userId, name, username, email, profileImage;
-    private ArrayList<String> friendList;
+
 
     public  User(){
 
     }
-    public User(String userId, String name, String username, String email, String profileImage, ArrayList<String> friendList) {
+    public User(String userId, String name, String username, String email, String profileImage) {
         this.userId = userId;
         this.name = name;
         this.username = username;
         this.email = email;
         this.profileImage = profileImage;
-        this.friendList = friendList;
     }
 
     public String getUserId() {
@@ -58,11 +55,4 @@ public class User {
         this.profileImage = profileImage;
     }
 
-    public ArrayList<String> getFriendList() {
-        return friendList;
-    }
-
-    public void setFriendList(ArrayList<String> friendList) {
-        this.friendList = friendList;
-    }
 }

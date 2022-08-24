@@ -25,6 +25,8 @@ import com.squareup.picasso.Picasso;
 import com.topurayhan.chatter.databinding.ActivityHomeBinding;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class HomeActivity extends AppCompatActivity {
     ActivityHomeBinding binding;
@@ -33,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<User> users;
     HomeAdapter homeAdapter;
     ProgressDialog progressDialog;
+    ArrayList<User> sortedUser;
 
     @SuppressLint("StaticFieldLeak")
     static LinearLayout chatsButton, friendsButton, searchButton, settingsButton;
@@ -46,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         users = new ArrayList<>();
+        sortedUser = new ArrayList<>();
         progressDialog = new ProgressDialog(this);
 
         progressDialog.setMessage("Loading...");
@@ -89,6 +93,13 @@ public class HomeActivity extends AppCompatActivity {
                         users.add(user);
                     }
                 }
+
+                Collections.sort(users, new Comparator<User>() {
+                    @Override
+                    public int compare(User user, User t1) {
+                        return user.getName().compareToIgnoreCase(t1.getName());
+                    }
+                });
                 homeAdapter.notifyDataSetChanged();
                 progressDialog.dismiss();
             }

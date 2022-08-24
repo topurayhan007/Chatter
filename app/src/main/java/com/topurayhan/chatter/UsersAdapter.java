@@ -15,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.topurayhan.chatter.databinding.ActivitySearchItemBinding;
 
@@ -67,27 +70,67 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
             }
         });
 
-        holder.binding.addFriendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ArrayList<String> friendId = new ArrayList<>();
-                friendId.add(user.getUserId());
-                user.setFriendList(friendId);
-                Log.d("YES", friendId.toString());
-                database.getReference().child("users")
+        Log.d("YES", "Inside");
+        database.getReference().child("users")
                         .child(mAuth.getUid())
-                        .child("friendList")
-                        .setValue(friendId).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(context, "Added to friend list!", Toast.LENGTH_SHORT).show();
-                            holder.binding.addFriendButton.setVisibility(View.INVISIBLE);
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.child("friendList").exists()){
+                            database.getReference().child("users")
+                                    .child(mAuth.getUid())
+                                    .child("friendList")
+                                    .equalTo(user.getUserId())
+                                    .addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (!snapshot.exists()){
+                                                holder.binding.addFriendButton.setVisibility(View.VISIBLE);
+
+                                                holder.binding.addFriendButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        String friendID = user.getUserId();
+
+                                                        database.getReference().child("users")
+                                                                .child(mAuth.getUid())
+                                                                .child("friendList")
+                                                                .child(friendID)
+                                                                .setValue(friendID).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        if(task.isSuccessful()){
+                                                                            Toast.makeText(context, "Added to friend list!", Toast.LENGTH_SHORT).show();
+                                                                            holder.binding.addFriendButton.setVisibility(View.GONE);
+                                                                        }
+                                                                    }
+                                                                });
+                                                    }
+                                                });
+                                            }
+                                            else {
+                                                holder.binding.addFriendButton.setVisibility(View.GONE);
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
                         }
                     }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
                 });
-            }
-        });
+
+        Log.d("YES", "Outside");
+
+
 
     }
 
