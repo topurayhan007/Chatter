@@ -7,7 +7,7 @@
    - Login verification
    - Signup verification
    - Unique username verification 
-   - Able to sigup using email (not verified ones)
+   - Able to signup using email (not verified ones)
    - Able to chat
    - Able to send photos
    - Able to add reactions to messages or photos
