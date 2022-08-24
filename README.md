@@ -3,6 +3,7 @@
 ## A chatting app made using Android Studio and Firebase, written in Java.
 
 ### Functionalities:
+   - Able to login
    - Able to sigup using email (not verified ones)
    - Able to chat
    - Able to send photos
