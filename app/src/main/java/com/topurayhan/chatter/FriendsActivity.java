@@ -2,9 +2,6 @@ package com.topurayhan.chatter;
 
 import static com.topurayhan.chatter.R.drawable.avatar;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +12,9 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,10 +23,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.topurayhan.chatter.databinding.ActivityFriendsBinding;
 
+import java.util.ArrayList;
+
 public class FriendsActivity extends AppCompatActivity {
     ActivityFriendsBinding binding;
     FirebaseAuth mAuth;
     FirebaseDatabase database;
+    ArrayList<User> users;
+    FriendsAdapter friendsAdapter;
+    ArrayList<String> friends;
+    String friendID;
 
     @SuppressLint("StaticFieldLeak")
     static LinearLayout chatsButton, friendsButton, searchButton, settingsButton;
@@ -39,6 +45,8 @@ public class FriendsActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        friends = new ArrayList<>();
+        users = new ArrayList<>();
 
         chatsButton = findViewById(R.id.chatsButton);
         friendsButton = findViewById(R.id.friendsButton);
@@ -79,6 +87,50 @@ public class FriendsActivity extends AppCompatActivity {
                     binding.profilePic.setImageDrawable(d);
                 }
             }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        friendsAdapter = new FriendsAdapter(this, users);
+        binding.friendsRecyclerView.setAdapter(friendsAdapter);
+
+//        Log.d("YES", String.valueOf(friendID));
+//        database.getReference().child("users")
+//                .child("friendList").addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        if(snapshot.exists()){
+//                            //noinspection unchecked
+//                            friends = snapshot.child("0").getValue(ArrayList.class);
+//                            friendID = snapshot.child("0").getValue(String.class);
+//                            Log.d("YES", String.valueOf(friendID));
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//        Log.d("YES", String.valueOf(friendID));
+
+        database.getReference().child("users").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                users.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                    User user = snapshot1.getValue(User.class);
+                    if(!user.getUserId().equals(mAuth.getUid())){
+                        users.add(user);
+                    }
+                }
+                friendsAdapter.notifyDataSetChanged();
+            }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
