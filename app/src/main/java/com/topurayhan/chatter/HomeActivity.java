@@ -3,6 +3,7 @@ package com.topurayhan.chatter;
 import static com.topurayhan.chatter.R.drawable.avatar;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -31,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseDatabase database;
     ArrayList<User> users;
     HomeAdapter homeAdapter;
+    ProgressDialog progressDialog;
 
     @SuppressLint("StaticFieldLeak")
     static LinearLayout chatsButton, friendsButton, searchButton, settingsButton;
@@ -44,7 +46,10 @@ public class HomeActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         users = new ArrayList<>();
+        progressDialog = new ProgressDialog(this);
 
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
 
         chatsButton = findViewById(R.id.chatsButton);
         friendsButton = findViewById(R.id.friendsButton);
@@ -85,6 +90,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 }
                 homeAdapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
 
             @Override
