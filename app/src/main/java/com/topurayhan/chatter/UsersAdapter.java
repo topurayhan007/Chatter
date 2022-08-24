@@ -3,7 +3,6 @@ package com.topurayhan.chatter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.topurayhan.chatter.databinding.ActivitySearchItemBinding;
 
@@ -69,67 +65,27 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
                 context.startActivity(intent);
             }
         });
+        holder.binding.addFriendButton.setVisibility(View.VISIBLE);
+        holder.binding.addFriendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String friendID = user.getUserId();
 
-        Log.d("YES", "Inside");
-        database.getReference().child("users")
+                database.getReference().child("users")
                         .child(mAuth.getUid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.child("friendList").exists()){
-                            database.getReference().child("users")
-                                    .child(mAuth.getUid())
-                                    .child("friendList")
-                                    .equalTo(user.getUserId())
-                                    .addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (!snapshot.exists()){
-                                                holder.binding.addFriendButton.setVisibility(View.VISIBLE);
-
-                                                holder.binding.addFriendButton.setOnClickListener(new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View view) {
-                                                        String friendID = user.getUserId();
-
-                                                        database.getReference().child("users")
-                                                                .child(mAuth.getUid())
-                                                                .child("friendList")
-                                                                .child(friendID)
-                                                                .setValue(friendID).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                    @Override
-                                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                                        if(task.isSuccessful()){
-                                                                            Toast.makeText(context, "Added to friend list!", Toast.LENGTH_SHORT).show();
-                                                                            holder.binding.addFriendButton.setVisibility(View.GONE);
-                                                                        }
-                                                                    }
-                                                                });
-                                                    }
-                                                });
-                                            }
-                                            else {
-                                                holder.binding.addFriendButton.setVisibility(View.GONE);
-                                            }
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-        Log.d("YES", "Outside");
-
+                        .child("friendList")
+                        .child(friendID)
+                        .setValue(friendID).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(context, "Added to friend list!", Toast.LENGTH_SHORT).show();
+                                    holder.binding.addFriendButton.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+            }
+        });
 
 
     }
