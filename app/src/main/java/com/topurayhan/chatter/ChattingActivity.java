@@ -105,10 +105,17 @@ public class ChattingActivity extends AppCompatActivity {
 
                 binding.messageInput.setText("");
                 String randomKey = database.getReference().push().getKey();
-
+                String msg;
                 //noinspection MismatchedQueryAndUpdateOfCollection
                 HashMap<String, Object> lastMsgObj = new HashMap<>();
-                lastMsgObj.put("lastMsg", message.getMessage());
+                if (message.getMessage().length() > 35){
+                    msg = message.getMessage().substring(0, 35) + ".... ";
+                    lastMsgObj.put("lastMsg", msg);
+                }
+                else{
+                    lastMsgObj.put("lastMsg", message.getMessage());
+                }
+
                 lastMsgObj.put("lastMsgTime", date.getTime());
 
                 database.getReference().child("chats").child(senderRoom).updateChildren(lastMsgObj);
