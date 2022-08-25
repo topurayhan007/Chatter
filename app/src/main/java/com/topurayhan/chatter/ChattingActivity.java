@@ -133,8 +133,9 @@ public class ChattingActivity extends AppCompatActivity {
                                         });
                             }
                         });
-
+                binding.chattingRecyclerView.smoothScrollToPosition(messagesAdapter.getItemCount());
             }
+
         });
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
