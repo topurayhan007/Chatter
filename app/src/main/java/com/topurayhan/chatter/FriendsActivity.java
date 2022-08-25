@@ -30,6 +30,7 @@ public class FriendsActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseDatabase database;
     ArrayList<User> users;
+    ArrayList<User> temp;
     FriendsAdapter friendsAdapter;
     ArrayList<String> friends;
     String friendID;
@@ -96,25 +97,7 @@ public class FriendsActivity extends AppCompatActivity {
         friendsAdapter = new FriendsAdapter(this, users);
         binding.friendsRecyclerView.setAdapter(friendsAdapter);
 
-//        Log.d("YES", String.valueOf(friendID));
-//        database.getReference().child("users")
-//                .child("friendList").addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        if(snapshot.exists()){
-//                            //noinspection unchecked
-//                            friends = snapshot.child("0").getValue(ArrayList.class);
-//                            friendID = snapshot.child("0").getValue(String.class);
-//                            Log.d("YES", String.valueOf(friendID));
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-//        Log.d("YES", String.valueOf(friendID));
+
 
         database.getReference().child("users").addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -125,9 +108,34 @@ public class FriendsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()){
                     User user = snapshot1.getValue(User.class);
                     if(!user.getUserId().equals(mAuth.getUid())){
+//                        database.getReference().child("users")
+//                            .child(mAuth.getUid())
+//                            .child("friendList")
+//                            .addValueEventListener(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                    for (DataSnapshot snapshot2 : snapshot.getChildren()){
+//                                        String check = String.valueOf(snapshot2.getValue());
+//                                        Log.d("YESc", check);
+//                                        if(check.equals(user.getUserId())){
+//                                            users.add(user);
+//                                            temp.add(user);
+//                                            Log.d("YESc", user.toString());
+//                                        }
+//
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                }
+//                            });
+//                        //
                         users.add(user);
                     }
                 }
+
                 friendsAdapter.notifyDataSetChanged();
             }
 
