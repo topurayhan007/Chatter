@@ -7,12 +7,12 @@
    - Login verification
    - Signup verification
    - Unique username verification 
-   - Able to sigup using email (not verified ones)
+   - Able to signup using email (not verified ones)
    - Able to chat
    - Able to send photos
    - Able to add reactions to messages or photos
-   - Able to add search new users
-   - Able to add users as friend (not implement)
+   - Able to search new users or friends
+   - Able to add users as friend (not implemented)
    - Able to update profile picture
    - Able to update name
    - Able to update username
