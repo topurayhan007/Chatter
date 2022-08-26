@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -90,18 +91,38 @@ public class HomeActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()){
                     User user = snapshot1.getValue(User.class);
                     if(!user.getUserId().equals(mAuth.getUid())){
-                        users.add(user);
+                        database.getReference().child("users")
+                                .child(mAuth.getUid())
+                                .child("friendList")
+                                .addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for (DataSnapshot snapshot2 : snapshot.getChildren()){
+                                            String check = String.valueOf(snapshot2.getValue());
+
+                                            if(check.equals(user.getUserId())){
+                                                Log.d("YESCheck", user.getUsername());
+                                                users.add(user);
+                                            }
+
+                                        }
+                                        Collections.sort(users, new Comparator<User>() {
+                                            @Override
+                                            public int compare(User user, User t1) {
+                                                return user.getName().compareToIgnoreCase(t1.getName());
+                                            }
+                                        });
+                                        homeAdapter.notifyDataSetChanged();
+                                        progressDialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                     }
                 }
-
-                Collections.sort(users, new Comparator<User>() {
-                    @Override
-                    public int compare(User user, User t1) {
-                        return user.getName().compareToIgnoreCase(t1.getName());
-                    }
-                });
-                homeAdapter.notifyDataSetChanged();
-                progressDialog.dismiss();
             }
 
             @Override
@@ -109,6 +130,8 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+
 
         friendsButton.setOnClickListener(new View.OnClickListener() {
             @Override
