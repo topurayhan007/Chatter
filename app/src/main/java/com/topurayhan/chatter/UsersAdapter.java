@@ -65,6 +65,37 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
                 context.startActivity(intent);
             }
         });
+
+        //holder.binding.addFriendButton.setVisibility(View.GONE);
+//        if(!user.getUserId().equals(mAuth.getUid())){
+//            database.getReference().child("users")
+//                    .child(mAuth.getUid())
+//                    .child("friendList")
+//                    .addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            for (DataSnapshot snapshot2 : snapshot.getChildren()){
+//                                String check = String.valueOf(snapshot2.getValue());
+//
+//                                if(!check.equals(user.getUserId())){
+//                                    Log.d("YESCheck", user.getUsername());
+//                                    //users.add(user);
+//                                    holder.binding.addFriendButton.setVisibility(View.VISIBLE);
+//                                }
+//
+//
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+//        }
+
+
+
         holder.binding.addFriendButton.setVisibility(View.VISIBLE);
         holder.binding.addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
