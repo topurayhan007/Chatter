@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -108,35 +109,31 @@ public class FriendsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()){
                     User user = snapshot1.getValue(User.class);
                     if(!user.getUserId().equals(mAuth.getUid())){
-//                        database.getReference().child("users")
-//                            .child(mAuth.getUid())
-//                            .child("friendList")
-//                            .addValueEventListener(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                    for (DataSnapshot snapshot2 : snapshot.getChildren()){
-//                                        String check = String.valueOf(snapshot2.getValue());
-//                                        Log.d("YESc", check);
-//                                        if(check.equals(user.getUserId())){
-//                                            users.add(user);
-//                                            temp.add(user);
-//                                            Log.d("YESc", user.toString());
-//                                        }
-//
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                                }
-//                            });
-//                        //
-                        users.add(user);
+                        database.getReference().child("users")
+                            .child(mAuth.getUid())
+                            .child("friendList")
+                            .addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot snapshot2 : snapshot.getChildren()){
+                                        String check = String.valueOf(snapshot2.getValue());
+
+                                        if(check.equals(user.getUserId())){
+                                            Log.d("YESCheck", user.getUsername());
+                                            users.add(user);
+                                        }
+
+                                    }
+                                    friendsAdapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                     }
                 }
-
-                friendsAdapter.notifyDataSetChanged();
             }
 
             @Override
