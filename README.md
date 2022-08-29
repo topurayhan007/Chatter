@@ -12,7 +12,7 @@
    - Able to send photos
    - Able to add reactions to messages or photos
    - Able to search new users or friends
-   - Able to add users as friend (not implemented)
+   - Able to add users as friend
    - Able to update profile picture
    - Able to update name
    - Able to update username
