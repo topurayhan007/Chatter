@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "163720401957-0n2avj9n2qh55a6hfmctjn3ei2vqnl0a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.topurayhan.chatter",
+            "certificate_hash": "6ccf572658fa9f59150d4c97a80312810b15276c"
+          }
+        },
+        {
           "client_id": "163720401957-bdqgrj1pulqgjgui2m24vnboetc6mkjh.apps.googleusercontent.com",
           "client_type": 3
         }

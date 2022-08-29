@@ -17,17 +17,20 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 import com.topurayhan.chatter.databinding.ActivityHomeBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity {
     ActivityHomeBinding binding;
@@ -40,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     static LinearLayout chatsButton, friendsButton, searchButton, settingsButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,23 @@ public class HomeActivity extends AppCompatActivity {
         friendsButton = findViewById(R.id.friendsButton);
         searchButton = findViewById(R.id.searchButton);
         settingsButton = findViewById(R.id.settingsButton);
+
+
+        FirebaseMessaging.getInstance()
+                        .getToken()
+                                .addOnSuccessListener(new OnSuccessListener<String>() {
+                                    @Override
+                                    public void onSuccess(String token) {
+                                        //noinspection MismatchedQueryAndUpdateOfCollection
+                                        HashMap<String, Object> hashMap = new HashMap<>();
+                                        hashMap.put("token", token);
+
+                                        database.getReference()
+                                                .child("users")
+                                                .child(mAuth.getUid())
+                                                .updateChildren(hashMap);
+                                    }
+                                });
 
         database.getReference().child("users").child(mAuth.getUid()).child("profileImage").addValueEventListener(new ValueEventListener() {
             @Override
@@ -154,6 +175,22 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        database.getReference().child("presence")
+                .child(mAuth.getUid())
+                .setValue("online");
+    }
+
+    @Override
+    protected void onPause() {
+        database.getReference().child("presence")
+                .child(mAuth.getUid())
+                .setValue("offline");
+        super.onPause();
     }
 
     public void openFriendsActivity(){

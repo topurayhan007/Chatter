@@ -49,6 +49,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsV
                 intent.putExtra("userName", user.getName());
                 intent.putExtra("profilePic", user.getProfileImage());
                 intent.putExtra("userId", user.getUserId());
+                intent.putExtra("token", user.getToken());
                 context.startActivity(intent);
             }
         });

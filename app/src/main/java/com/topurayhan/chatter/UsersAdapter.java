@@ -2,7 +2,6 @@ package com.topurayhan.chatter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,16 +54,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
         holder.binding.friendName.setText(user.getName());
         holder.binding.username.setText(user.getUsername());
         Picasso.get().load(user.getProfileImage()).into(holder.binding.friendProfilePic);
-        holder.binding.friend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ChattingActivity.class);
-                intent.putExtra("userName", user.getName());
-                intent.putExtra("profilePic", user.getProfileImage());
-                intent.putExtra("userId", user.getUserId());
-                context.startActivity(intent);
-            }
-        });
+
 
         //holder.binding.addFriendButton.setVisibility(View.GONE);
 //        if(!user.getUserId().equals(mAuth.getUid())){

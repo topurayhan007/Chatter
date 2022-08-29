@@ -28,6 +28,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     FirebaseDatabase database;
     Context context;
     ArrayList<User> users;
+    String senderName;
     public HomeAdapter(Context context, ArrayList<User> users) {
         this.context = context;
         this.users = users;
@@ -51,7 +52,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
             mAuth = FirebaseAuth.getInstance();
             database = FirebaseDatabase.getInstance();
 
+
+
             String senderId = mAuth.getUid();
+
             String senderRoom = senderId + user.getUserId();
 
             holder.binding.friendName.setText(user.getName());
@@ -59,10 +63,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
             holder.binding.friend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     Intent intent = new Intent(context, ChattingActivity.class);
                     intent.putExtra("userName", user.getName());
                     intent.putExtra("profilePic", user.getProfileImage());
                     intent.putExtra("userId", user.getUserId());
+                    intent.putExtra("token", user.getToken());
+                    //intent.putExtra("senderName", senderName);
                     context.startActivity(intent);
                 }
             });

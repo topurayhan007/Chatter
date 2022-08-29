@@ -6,13 +6,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -27,10 +37,13 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.topurayhan.chatter.databinding.ActivityChattingBinding;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ChattingActivity extends AppCompatActivity {
     ActivityChattingBinding binding;
@@ -38,9 +51,10 @@ public class ChattingActivity extends AppCompatActivity {
     ArrayList<Message> messages;
     FirebaseDatabase database;
     FirebaseStorage storage;
+    FirebaseAuth mAuth;
     ProgressDialog progressDialog;
 
-    String senderRoom, receiverRoom, senderID, receiverID;
+    String senderRoom, receiverRoom, senderID, receiverID, senderName;
 
 
     @Override
@@ -50,6 +64,7 @@ public class ChattingActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         database = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         progressDialog = new ProgressDialog(this);
 
@@ -57,15 +72,54 @@ public class ChattingActivity extends AppCompatActivity {
         progressDialog.setMessage("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
 
+        messages = new ArrayList<>();
+
         String name = getIntent().getStringExtra("userName");
-        receiverID = getIntent().getStringExtra("userId");
         String profileImage = getIntent().getStringExtra("profilePic");
+        String token = getIntent().getStringExtra("token");
+        //senderName = getIntent().getStringExtra("senderName");
+
+
+
+
         binding.friendName.setText(name);
         Picasso.get().load(profileImage).into(binding.friendProfilePic);
 
-        messages = new ArrayList<>();
 
+        receiverID = getIntent().getStringExtra("userId");
         senderID = FirebaseAuth.getInstance().getUid();
+
+        database.getReference().child("presence").child(receiverID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String status = snapshot.getValue(String.class);
+                    if (status.equals("offline")){
+                        binding.status.setText(status);
+                        binding.status.setTextColor(getResources().getColor(R.color.grey));
+                        binding.status.setVisibility(View.VISIBLE);
+                    }
+                    else if (status.equals("typing...")){
+                        binding.status.setText(status);
+                        binding.status.setTextColor(getResources().getColor(R.color.blue));
+                        binding.status.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        binding.status.setText(status);
+                        binding.status.setTextColor(getResources().getColor(R.color.green));
+                        binding.status.setVisibility(View.VISIBLE);
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         senderRoom = senderID + receiverID;
         receiverRoom = receiverID + senderID;
 
@@ -108,8 +162,8 @@ public class ChattingActivity extends AppCompatActivity {
                 String msg;
                 //noinspection MismatchedQueryAndUpdateOfCollection
                 HashMap<String, Object> lastMsgObj = new HashMap<>();
-                if (message.getMessage().length() > 35){
-                    msg = message.getMessage().substring(0, 35) + ".... ";
+                if (message.getMessage().length() > 30){
+                    msg = message.getMessage().substring(0, 30) + ".... ";
                     lastMsgObj.put("lastMsg", msg);
                 }
                 else{
@@ -135,20 +189,21 @@ public class ChattingActivity extends AppCompatActivity {
                                         .setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-
+                                                //sendNotification(name, message.getMessage(), token);
                                             }
                                         });
                             }
                         });
-                binding.chattingRecyclerView.smoothScrollToPosition(messagesAdapter.getItemCount());
+                binding.chattingRecyclerView.smoothScrollToPosition(messagesAdapter.getItemCount()+100);
             }
 
         });
 
+
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goBackToChatsActivity();
+                finish();
             }
         });
 
@@ -163,6 +218,80 @@ public class ChattingActivity extends AppCompatActivity {
             }
         });
 
+        final Handler handler = new Handler();
+
+
+        binding.messageInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                database.getReference().child("presence").child(senderID).setValue("typing...");
+                handler.removeCallbacksAndMessages(null);
+                handler.postDelayed(userStoppedTyping, 1000);
+            }
+            final Runnable userStoppedTyping = new Runnable() {
+                @Override
+                public void run() {
+                    database.getReference().child("presence").child(senderID).setValue("online");
+                }
+            };
+        });
+
+    }
+
+
+    void sendNotification(String name, String message, String token){
+        try {
+            RequestQueue queue = Volley.newRequestQueue(this);
+
+            String url = "https://fcm.googleapis.com/fcm/send";
+
+            JSONObject data = new JSONObject();
+            data.put("title", name);
+            data.put("body", message);
+
+            JSONObject notificationData = new JSONObject();
+            notificationData.put("notification", data);
+            notificationData.put("to", token);
+
+            JsonObjectRequest request = new JsonObjectRequest(url, notificationData, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Toast.makeText(ChattingActivity.this, "success", Toast.LENGTH_SHORT).show();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(ChattingActivity.this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }){
+                @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    // Firebase Cloud Messaging Server Key
+                    String key = "Key=AAAAJh5_FCU:APA91bF8PQ9b0qHcYlO2BbBJtQXRRS9HsG9SQKVZ6sQcPtYfRevO8w8Dis4ZavAZDtjYMOxyDPCvTXQQj4WFUEea6G240W9svGHV0cjjqUBRSf9GLAaBWY5OZwFZj-ZoSisygpipgwXF";
+                    hashMap.put("Authorization", key);
+                    hashMap.put("Content-Type", "application/json");
+                    return hashMap;
+                }
+            };
+
+            queue.add(request);
+        }
+        catch (Exception ex){
+            Toast.makeText(this, "Notification sending error!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -234,6 +363,22 @@ public class ChattingActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        database.getReference().child("presence")
+                .child(FirebaseAuth.getInstance().getUid())
+                .setValue("online");
+
+    }
+    @Override
+    protected void onPause() {
+        database.getReference().child("presence")
+                .child(FirebaseAuth.getInstance().getUid())
+                .setValue("offline");
+        super.onPause();
     }
 
     public void goBackToChatsActivity(){

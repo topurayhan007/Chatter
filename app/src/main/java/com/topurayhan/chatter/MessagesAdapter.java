@@ -103,6 +103,7 @@ public class MessagesAdapter extends RecyclerView.Adapter{
                     viewHolder.binding.feeling.setImageResource(reactions[pos]);
                     viewHolder.binding.feeling.setVisibility(View.VISIBLE);
                 }
+
             }
             else {
                 ReceiveViewHolder viewHolder = (ReceiveViewHolder) holder;
@@ -115,9 +116,12 @@ public class MessagesAdapter extends RecyclerView.Adapter{
                     viewHolder.binding.feeling.setVisibility(View.VISIBLE);
                 }
 
+
             }
 
             message.setFeeling(pos);
+
+
 
             FirebaseDatabase.getInstance().getReference()
                     .child("chats")
@@ -143,7 +147,7 @@ public class MessagesAdapter extends RecyclerView.Adapter{
                 viewHolder.binding.image.setVisibility(View.VISIBLE);
                 viewHolder.binding.sendMessage.setVisibility(View.GONE);
 
-                Picasso.get().load(message.getImageUrl()).into(viewHolder.binding.image);
+                Picasso.get().load(message.getImageUrl()).placeholder(R.drawable.image_placeholder).into(viewHolder.binding.image);
             }
 
             viewHolder.binding.sendMessage.setText(message.getMessage());
@@ -177,7 +181,7 @@ public class MessagesAdapter extends RecyclerView.Adapter{
                 viewHolder.binding.image.setVisibility(View.VISIBLE);
                 viewHolder.binding.sendMessage.setVisibility(View.GONE);
 
-                Picasso.get().load(message.getImageUrl()).into(viewHolder.binding.image);
+                Picasso.get().load(message.getImageUrl()).placeholder(R.drawable.image_placeholder).into(viewHolder.binding.image);
             }
             viewHolder.binding.sendMessage.setText(message.getMessage());
 
