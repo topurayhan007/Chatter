@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -189,6 +190,22 @@ public class ChattingActivity extends AppCompatActivity {
                                         .setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
+                                                database.getReference().child("users")
+                                                        .child(senderID)
+                                                        .child("name")
+                                                        .addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                senderName = snapshot.getValue(String.class);
+                                                                Log.d("YESsender", senderName);
+                                                                sendNotification(senderName, message.getMessage(), token);
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                                            }
+                                                        });
                                                 //sendNotification(name, message.getMessage(), token);
                                             }
                                         });
