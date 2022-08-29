@@ -48,7 +48,7 @@ public class MyFirebaseService extends FirebaseMessagingService {
                         .setContentText(messageBody)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
-                        .setVibrate(new long[] {100, 100})
+                        .setVibrate(new long[] {1000, 1000, 1000, 1000})
                         .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
