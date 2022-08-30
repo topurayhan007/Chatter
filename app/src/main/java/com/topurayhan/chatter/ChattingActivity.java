@@ -135,13 +135,17 @@ public class ChattingActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         messages.clear();
-
+                        int count = messages.size();
                         for (DataSnapshot snapshot1 : snapshot.getChildren()){
                             Message message = snapshot1.getValue(Message.class);
                             message.setMessageId(snapshot1.getKey());
                             messages.add(message);
                         }
                         messagesAdapter.notifyDataSetChanged();
+                        //messagesAdapter.notifyItemRangeInserted(messages.size(), messages.size());
+                        binding.chattingRecyclerView.smoothScrollToPosition(messages.size() - 1);
+//
+                        binding.chattingRecyclerView.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -154,66 +158,66 @@ public class ChattingActivity extends AppCompatActivity {
         binding.sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String messageInput = binding.messageInput.getText().toString();
-                Date date = new Date();
-                Message message = new Message(messageInput, senderID, date.getTime());
+                String messageInput = binding.messageInput.getText().toString().trim();
+                if (!messageInput.isEmpty()) {
 
-                binding.messageInput.setText("");
-                String randomKey = database.getReference().push().getKey();
-                String msg;
-                //noinspection MismatchedQueryAndUpdateOfCollection
-                HashMap<String, Object> lastMsgObj = new HashMap<>();
-                if (message.getMessage().length() > 30){
-                    msg = message.getMessage().substring(0, 30) + ".... ";
-                    lastMsgObj.put("lastMsg", msg);
+                    Date date = new Date();
+                    Message message = new Message(messageInput, senderID, date.getTime());
+
+                    binding.messageInput.setText(null);
+                    String randomKey = database.getReference().push().getKey();
+                    String msg;
+                    //noinspection MismatchedQueryAndUpdateOfCollection
+                    HashMap<String, Object> lastMsgObj = new HashMap<>();
+                    if (message.getMessage().length() > 30) {
+                        msg = message.getMessage().substring(0, 30) + ".... ";
+                        lastMsgObj.put("lastMsg", msg);
+                    } else {
+                        lastMsgObj.put("lastMsg", message.getMessage());
+                    }
+
+                    lastMsgObj.put("lastMsgTime", date.getTime());
+
+                    database.getReference().child("chats").child(senderRoom).updateChildren(lastMsgObj);
+                    database.getReference().child("chats").child(receiverRoom).updateChildren(lastMsgObj);
+
+                    database.getReference().child("chats")
+                            .child(senderRoom)
+                            .child("messages")
+                            .child(randomKey)
+                            .setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    database.getReference().child("chats")
+                                            .child(receiverRoom)
+                                            .child("messages")
+                                            .child(randomKey)
+                                            .setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    database.getReference().child("users")
+                                                            .child(senderID)
+                                                            .child("name")
+                                                            .addValueEventListener(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                    senderName = snapshot.getValue(String.class);
+                                                                    Log.d("YESsender", senderName);
+                                                                    sendNotification(senderName, message.getMessage(), token);
+                                                                }
+
+                                                                @Override
+                                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                }
+                                                            });
+                                                    //sendNotification(name, message.getMessage(), token);
+                                                }
+                                            });
+                                }
+                            });
                 }
-                else{
-                    lastMsgObj.put("lastMsg", message.getMessage());
-                }
-
-                lastMsgObj.put("lastMsgTime", date.getTime());
-
-                database.getReference().child("chats").child(senderRoom).updateChildren(lastMsgObj);
-                database.getReference().child("chats").child(receiverRoom).updateChildren(lastMsgObj);
-
-                database.getReference().child("chats")
-                        .child(senderRoom)
-                        .child("messages")
-                        .child(randomKey)
-                        .setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                database.getReference().child("chats")
-                                        .child(receiverRoom)
-                                        .child("messages")
-                                        .child(randomKey)
-                                        .setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void unused) {
-                                                database.getReference().child("users")
-                                                        .child(senderID)
-                                                        .child("name")
-                                                        .addValueEventListener(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                                senderName = snapshot.getValue(String.class);
-                                                                Log.d("YESsender", senderName);
-                                                                sendNotification(senderName, message.getMessage(), token);
-                                                            }
-
-                                                            @Override
-                                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                                            }
-                                                        });
-                                                //sendNotification(name, message.getMessage(), token);
-                                            }
-                                        });
-                            }
-                        });
-                binding.chattingRecyclerView.smoothScrollToPosition(messagesAdapter.getItemCount()+100);
             }
-
         });
 
 
