@@ -85,11 +85,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                                 @SuppressLint("SimpleDateFormat")
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
 
-//                                if(lastMsg.length() > 20){
-//                                    String trim = lastMsg;
-//                                    String temp = trim.substring(0, 19) + "...";
-//                                    holder.binding.friendLastMsg.setText(temp.toString());
-//                                }
                                 holder.binding.friendLastMsg.setText(lastMsg);
                                 holder.binding.friendLastMsgTime.setText(dateFormat.format(new Date(time)));
 
