@@ -154,7 +154,7 @@ public class MessagesAdapter extends RecyclerView.Adapter{
 
 
             @SuppressLint("SimpleDateFormat")
-            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM-dd, hh:mm a");
             long time = message.getTimestamp();
             viewHolder.binding.sendMessageTime.setText(dateFormat.format(new Date(time)));
 
@@ -186,7 +186,7 @@ public class MessagesAdapter extends RecyclerView.Adapter{
             viewHolder.binding.sendMessage.setText(message.getMessage());
 
             @SuppressLint("SimpleDateFormat")
-            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM-dd, hh:mm a");
             long time = message.getTimestamp();
             viewHolder.binding.sendMessageTime.setText(dateFormat.format(new Date(time)));
 

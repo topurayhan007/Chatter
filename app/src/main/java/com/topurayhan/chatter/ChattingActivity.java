@@ -144,7 +144,7 @@ public class ChattingActivity extends AppCompatActivity {
                         messagesAdapter.notifyDataSetChanged();
                         //messagesAdapter.notifyItemRangeInserted(messages.size(), messages.size());
                         binding.chattingRecyclerView.smoothScrollToPosition(messages.size() - 1);
-//
+
                         binding.chattingRecyclerView.setVisibility(View.VISIBLE);
                     }
 
