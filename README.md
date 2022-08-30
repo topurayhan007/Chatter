@@ -11,6 +11,8 @@
    - Able to chat
    - Able to send photos
    - Able to add reactions to messages or photos
+   - Able to see availability status (online, offline, typing)
+   - Able to receive message notification when offline
    - Able to search new users or friends
    - Able to add users as friend
    - Able to update profile picture
