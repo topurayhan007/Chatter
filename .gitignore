@@ -8,11 +8,7 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
-/build/generated
-/build/intermediates
-/build/tmp
-/build/outputs/bundle
-/build/outputs/logs
+/build
 /captures
 .externalNativeBuild
 .cxx
