@@ -9,6 +9,7 @@
    - Unique username verification 
    - Able to signup using email (not verified ones)
    - Able to chat
+   - Chat filters by descending order of recent message time
    - Able to send photos
    - Able to add reactions to messages or photos
    - Able to see availability status (online, offline, typing)
