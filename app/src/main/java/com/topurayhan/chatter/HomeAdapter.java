@@ -35,6 +35,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void setFilteredList(ArrayList<User> filteredList){
+        this.users = filteredList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public HomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

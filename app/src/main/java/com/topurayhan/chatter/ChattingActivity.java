@@ -183,8 +183,8 @@ public class ChattingActivity extends AppCompatActivity {
                     String msg;
                     //noinspection MismatchedQueryAndUpdateOfCollection
                     HashMap<String, Object> lastMsgObj = new HashMap<>();
-                    if (message.getMessage().length() > 30) {
-                        msg = message.getMessage().substring(0, 30) + ".... ";
+                    if (message.getMessage().length() > 28) {
+                        msg = message.getMessage().substring(0, 28) + ".... ";
                         lastMsgObj.put("lastMsg", msg);
                     } else {
                         lastMsgObj.put("lastMsg", message.getMessage());

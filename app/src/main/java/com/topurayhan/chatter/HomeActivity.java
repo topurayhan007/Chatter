@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +41,8 @@ public class HomeActivity extends AppCompatActivity {
     HomeAdapter homeAdapter;
     ProgressDialog progressDialog;
     ArrayList<User> sortedUser;
+
+    boolean seen = false;
 
     @SuppressLint("StaticFieldLeak")
     static LinearLayout chatsButton, friendsButton, searchButton, settingsButton;
@@ -155,6 +158,34 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        binding.searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!seen){
+                    binding.search.setVisibility(View.VISIBLE);
+                    binding.search.clearFocus();
+                    binding.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                        @Override
+                        public boolean onQueryTextSubmit(String query) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onQueryTextChange(String newText) {
+                            fileList(newText);
+                            return true;
+                        }
+                    });
+                    seen = true;
+                }
+                else{
+                    binding.search.setVisibility(View.GONE);
+                    seen = false;
+                }
+
+
+            }
+        });
 
 
         friendsButton.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +208,20 @@ public class HomeActivity extends AppCompatActivity {
                 openSettingsActivity();
             }
         });
+
+    }
+
+    private void fileList(String text) {
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+        ArrayList<User> filteredList = new ArrayList<>();
+        for (User user : users){
+            if (user.getName().toLowerCase().contains(text.toLowerCase()) || user.getUsername().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(user);
+            }
+        }
+        if (!filteredList.isEmpty()){
+            homeAdapter.setFilteredList(filteredList);
+        }
 
     }
 

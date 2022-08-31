@@ -7,17 +7,6 @@
     android:background="#000010"
     tools:context=".AboutActivity">
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:background="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/backButton"
         android:layout_width="40dp"
@@ -49,18 +38,297 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/about"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:paddingHorizontal="20dp"
-        android:fontFamily="@font/average_sans"
+
+
+    <ScrollView
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        android:scrollbars="none"
+        tools:ignore="ScrollViewCount">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#000010"
+                    android:text="@string/about"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:fontFamily="@font/average_sans" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView1"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#000010"
+                android:layout_marginHorizontal="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_big_blob"
+                    android:orientation="vertical"
+                    android:paddingVertical="20dp"
+                    android:gravity="center">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/topuImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="#000010"
+                        android:contentDescription="TODO"
+                        android:scaleType="centerCrop"
+                        android:elevation="10dp"
+                        android:src="@drawable/topu"
+                        app:layout_constraintEnd_toEndOf="@+id/cardView1"
+                        app:layout_constraintStart_toStartOf="@+id/cardView1"
+                        app:layout_constraintTop_toTopOf="@+id/cardView1"
+                        app:layout_constraintBottom_toTopOf="@+id/cardView1"
+                        tools:ignore="ContentDescription,HardcodedText" />
+
+
+                    <TextView
+                        android:id="@+id/topuName"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:fontFamily="@font/average_sans"
+                        android:gravity="center_vertical"
+                        android:text="TOPU RAYHAN"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/average_sans"
+                        android:gravity="center_vertical"
+                        android:text="App and Web developer"
+                        android:textColor="#CDC7C7"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/average_sans"
+                        android:gravity="center_vertical"
+                        android:text="@string/topuRayhanUsername"
+                        android:textColor="#CDC7C7"
+                        android:letterSpacing="0.02"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/topuFB"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/facebook"/>
+                        <ImageView
+                            android:id="@+id/topuTwitter"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/twitter"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/topuGithub"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/github"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/topuWeb"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/globe"/>
+                        <ImageView
+                            android:id="@+id/topuLinkedin"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/linkedin"/>
+                        <ImageView
+                            android:id="@+id/topuInsta"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/instagram"/>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#000010"
+                android:layout_marginHorizontal="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/cardView1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_big_blob"
+                    android:orientation="vertical"
+                    android:paddingVertical="20dp"
+                    android:gravity="center">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imranImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:contentDescription="TODO"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="#000010"
+                        android:scaleType="centerCrop"
+                        android:elevation="10dp"
+                        android:src="@drawable/avatar"
+                        app:layout_constraintEnd_toEndOf="@+id/cardView1"
+                        app:layout_constraintStart_toStartOf="@+id/cardView1"
+                        app:layout_constraintTop_toTopOf="@+id/cardView1"
+                        app:layout_constraintBottom_toTopOf="@+id/cardView1"
+                        tools:ignore="ContentDescription,HardcodedText" />
+
+
+                    <TextView
+                        android:id="@+id/imranName"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:fontFamily="@font/average_sans"
+                        android:gravity="center_vertical"
+                        android:text="IMRAN SYAM"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/average_sans"
+                        android:gravity="center_vertical"
+                        android:text="App and Web developer"
+                        android:textColor="#CDC7C7"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                    <!--suppress AndroidDomInspection -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/average_sans"
+                        android:gravity="center_vertical"
+                        android:text="@imran-24"
+                        android:textColor="#CDC7C7"
+                        android:letterSpacing="0.02"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imranFB"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/facebook"/>
+                        <ImageView
+                            android:id="@+id/imranTwitter"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/twitter"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imranGithub"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/github"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imranWeb"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/globe"/>
+                        <ImageView
+                            android:id="@+id/imranLinkedin"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/linkedin"/>
+                        <ImageView
+                            android:id="@+id/imranInsta"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/instagram"/>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
