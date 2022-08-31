@@ -54,11 +54,15 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/chatter_logo" />
+            android:resource="@drawable/chatter_logo_default" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/pink" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_sound"
+            android:resource="@raw/chatter_sound"/>
 
         <meta-data
             android:name="firebase_messaging_auto_init_enabled"
