@@ -297,35 +297,5 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             });
 
-//        Map<String, Object> user = new HashMap<>();
-//        Map<String, Object> friendList = new HashMap<>();
-//        friendList.put("friendID", null);
-////        Map<String, Object> chat = new HashMap<>();
-////        chat.put("friendID", null);
-////        chat.put("messages", null);
-//
-//
-//        user.put("fullName", fullName);
-//        user.put("username", username);
-//        user.put("email", email);
-//        user.put("profilePic", null);
-//        user.put("friendList", friendList);
-//
-//        // Add a new document with a generated ID
-//        db.collection("users")
-//            .document(userID).set(user)
-//            .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                @Override
-//                public void onSuccess(Void unused) {
-//                    openLoginActivity();
-//                    Toast.makeText(SignUpActivity.this, "Successfully registered!", Toast.LENGTH_SHORT).show();
-//                }
-//            })
-//            .addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    Log.w("TAG", "Error adding document", e);
-//                }
-//            });
     }
 }

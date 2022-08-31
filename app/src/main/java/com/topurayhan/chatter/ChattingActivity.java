@@ -129,23 +129,37 @@ public class ChattingActivity extends AppCompatActivity {
 
         database.getReference().child("chats")
                 .child(senderRoom)
-                .child("messages")
                 .addValueEventListener(new ValueEventListener() {
-                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        messages.clear();
-                        int count = messages.size();
-                        for (DataSnapshot snapshot1 : snapshot.getChildren()){
-                            Message message = snapshot1.getValue(Message.class);
-                            message.setMessageId(snapshot1.getKey());
-                            messages.add(message);
-                        }
-                        messagesAdapter.notifyDataSetChanged();
-                        //messagesAdapter.notifyItemRangeInserted(messages.size(), messages.size());
-                        binding.chattingRecyclerView.smoothScrollToPosition(messages.size() - 1);
+                        if (snapshot.exists()){
+                            database.getReference().child("chats")
+                                    .child(senderRoom)
+                                    .child("messages")
+                                    .addValueEventListener(new ValueEventListener() {
+                                        @SuppressLint("NotifyDataSetChanged")
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            messages.clear();
+                                            int count = messages.size();
+                                            for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                                                Message message = snapshot1.getValue(Message.class);
+                                                message.setMessageId(snapshot1.getKey());
+                                                messages.add(message);
+                                            }
+                                            messagesAdapter.notifyDataSetChanged();
+                                            //messagesAdapter.notifyItemRangeInserted(messages.size(), messages.size());
+                                            binding.chattingRecyclerView.smoothScrollToPosition(messages.size() - 1);
 
-                        binding.chattingRecyclerView.setVisibility(View.VISIBLE);
+                                            binding.chattingRecyclerView.setVisibility(View.VISIBLE);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                        }
                     }
 
                     @Override
@@ -203,6 +217,7 @@ public class ChattingActivity extends AppCompatActivity {
                                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                                     senderName = snapshot.getValue(String.class);
                                                                     Log.d("YESsender", senderName);
+                                                                    updateLastMessageTime(date.getTime(), senderID, receiverID);
                                                                     sendNotification(senderName, message.getMessage(), token);
                                                                 }
 
@@ -267,6 +282,13 @@ public class ChattingActivity extends AppCompatActivity {
             };
         });
 
+    }
+
+    private void updateLastMessageTime(long lastMsgTime, String senderID, String receiverID){
+        HashMap<String, Object> lastMsgObj = new HashMap<>();
+        lastMsgObj.put("lastMsgTime", lastMsgTime);
+        database.getReference().child("users").child(senderID).updateChildren(lastMsgObj);
+        database.getReference().child("users").child(receiverID).updateChildren(lastMsgObj);
     }
 
 

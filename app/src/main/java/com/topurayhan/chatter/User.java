@@ -2,6 +2,7 @@ package com.topurayhan.chatter;
 
 public class User {
     private String userId, name, username, email, profileImage, token;
+    private long lastMsgTime;
 
 
     public  User(){
@@ -61,5 +62,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public long getLastMsgTime() {
+        return lastMsgTime;
+    }
+
+    public void setLastMsgTime(long lastMsgTime) {
+        this.lastMsgTime = lastMsgTime;
     }
 }

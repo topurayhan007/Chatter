@@ -130,10 +130,13 @@ public class HomeActivity extends AppCompatActivity {
                                         Collections.sort(users, new Comparator<User>() {
                                             @Override
                                             public int compare(User user, User t1) {
-                                                return user.getName().compareToIgnoreCase(t1.getName());
+                                                //return user.getName().compareToIgnoreCase(t1.getName());
+                                                return Long.compare(t1.getLastMsgTime(), user.getLastMsgTime());
                                             }
                                         });
                                         homeAdapter.notifyDataSetChanged();
+                                        binding.homeRecyclerView.smoothScrollToPosition(0);
+                                        binding.homeRecyclerView.setVisibility(View.VISIBLE);
                                         progressDialog.dismiss();
                                     }
 
