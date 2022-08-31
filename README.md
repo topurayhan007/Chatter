@@ -1,4 +1,4 @@
-# Chatter [ BUG FIXING ONGOING: APP CRASHES WHEN INITIATING CHAT WITH NEW USER ]
+# Chatter
 
 ## A chatting app made using Android Studio and Firebase, written in Java.
 
