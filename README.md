@@ -2,6 +2,8 @@
 
 ## A chatting app made using Android Studio and Firebase, written in Java.
 
+### To use the app download this apk file:
+
  #### [https://github.com/topurayhan007/Chatter/raw/main/app/build/outputs/apk/debug/Chatter.apk]
 
 
@@ -33,7 +35,6 @@
    - pgreze/android-reactions
    - square/picasso
 
-### To use the app download this apk file:
 
 
 
