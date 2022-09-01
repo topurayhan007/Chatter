@@ -2,6 +2,9 @@
 
 ## A chatting app made using Android Studio and Firebase, written in Java.
 
+ #### [https://github.com/topurayhan007/Chatter/raw/main/app/build/outputs/apk/debug/Chatter.apk]
+
+
 ### Functionalities:
    - Able to login
    - Login verification
@@ -32,8 +35,7 @@
 
 ### To use the app download this apk file:
 
- #### [https://github.com/topurayhan007/Chatter/raw/main/app/build/outputs/apk/debug/Chatter.apk]
- 
+
 
 ![Screenshot 1](asset/1.jpg)
 
