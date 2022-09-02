@@ -55,16 +55,16 @@ public class LoginActivity extends AppCompatActivity {
     private static final int REQ_ONE_TAP = 2;
     GoogleSignInClient googleSignInClient;
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            currentUser.reload();
-            openHomeActivity();
-        }
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        // Check if user is signed in (non-null) and update UI accordingly.
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if(currentUser != null){
+//            currentUser.reload();
+//            openHomeActivity();
+//        }
+//    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -86,15 +86,15 @@ public class LoginActivity extends AppCompatActivity {
 
         signUp.setOnClickListener(view -> openSignUpActivity());
 
-        createGoogleSignInRequest();
-
-        binding.google.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = googleSignInClient.getSignInIntent();
-                startActivityForResult(intent, REQ_ONE_TAP);
-            }
-        });
+//        createGoogleSignInRequest();
+//
+//        binding.google.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = googleSignInClient.getSignInIntent();
+//                startActivityForResult(intent, REQ_ONE_TAP);
+//            }
+//        });
 
         loginButton.setOnClickListener(view -> {
             // Authenticate then openHomeActivity

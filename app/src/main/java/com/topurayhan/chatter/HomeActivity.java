@@ -110,43 +110,53 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 users.clear();
-                for (DataSnapshot snapshot1 : snapshot.getChildren()){
-                    User user = snapshot1.getValue(User.class);
-                    if(!user.getUserId().equals(mAuth.getUid())){
-                        database.getReference().child("users")
-                                .child(mAuth.getUid())
-                                .child("friendList")
-                                .addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        for (DataSnapshot snapshot2 : snapshot.getChildren()){
-                                            String check = String.valueOf(snapshot2.getValue());
+                if (snapshot.getChildrenCount() > 1) {
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        User user = snapshot1.getValue(User.class);
+                        if (!user.getUserId().equals(mAuth.getUid())) {
+                            database.getReference().child("users")
+                                    .child(mAuth.getUid())
+                                    .child("friendList")
+                                    .addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot snapshot2 : snapshot.getChildren()) {
+                                                    String check = String.valueOf(snapshot2.getValue());
 
-                                            if(check.equals(user.getUserId())){
-                                                Log.d("YESCheck", user.getUsername());
-                                                users.add(user);
+                                                    if (check.equals(user.getUserId())) {
+                                                        Log.d("YESCheck", user.getUsername());
+                                                        users.add(user);
+                                                    }
+
+                                                }
+                                                Collections.sort(users, new Comparator<User>() {
+                                                    @Override
+                                                    public int compare(User user, User t1) {
+                                                        //return user.getName().compareToIgnoreCase(t1.getName());
+                                                        return Long.compare(t1.getLastMsgTime(), user.getLastMsgTime());
+                                                    }
+                                                });
+                                                homeAdapter.notifyDataSetChanged();
+                                                binding.homeRecyclerView.smoothScrollToPosition(0);
+                                                binding.homeRecyclerView.setVisibility(View.VISIBLE);
+                                                progressDialog.dismiss();
                                             }
-
+                                            else{
+                                                progressDialog.dismiss();
+                                            }
                                         }
-                                        Collections.sort(users, new Comparator<User>() {
-                                            @Override
-                                            public int compare(User user, User t1) {
-                                                //return user.getName().compareToIgnoreCase(t1.getName());
-                                                return Long.compare(t1.getLastMsgTime(), user.getLastMsgTime());
-                                            }
-                                        });
-                                        homeAdapter.notifyDataSetChanged();
-                                        binding.homeRecyclerView.smoothScrollToPosition(0);
-                                        binding.homeRecyclerView.setVisibility(View.VISIBLE);
-                                        progressDialog.dismiss();
-                                    }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            progressDialog.dismiss();
+                                        }
+                                    });
+                        }
                     }
+                }
+                else {
+                    progressDialog.dismiss();
                 }
             }
 
