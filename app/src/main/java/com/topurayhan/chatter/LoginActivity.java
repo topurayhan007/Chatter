@@ -102,6 +102,12 @@ public class LoginActivity extends AppCompatActivity {
             performAuth();
         });
 
+        binding.forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openForgotPasswordActivity();
+            }
+        });
 
 
         password.setOnTouchListener((view, motionEvent) -> {
@@ -214,6 +220,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void openForgotPasswordActivity(){
+        Intent intent = new Intent(this, ForgotPasswordActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     public void openSignUpActivity(){
         Intent intent = new Intent(this, SignUpActivity.class);

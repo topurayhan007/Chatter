@@ -37,6 +37,8 @@
             tools:ignore="LockedOrientationActivity" />
         <activity android:name=".AboutActivity" android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".ForgotPasswordActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"

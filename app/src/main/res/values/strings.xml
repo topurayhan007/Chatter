@@ -38,4 +38,5 @@
     <string name="at_username">topurayhan007</string>
     <string name="_10_15_am">10:15 AM</string>
     <string name="about">A chatting app made by Topu Rayhan and Imran Syam</string>
+    <string name="reset_phrase">Enter your email address and we will send you a reset link to reset your password.</string>
 </resources>

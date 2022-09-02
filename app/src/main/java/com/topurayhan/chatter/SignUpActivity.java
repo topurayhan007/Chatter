@@ -2,10 +2,8 @@ package com.topurayhan.chatter;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -124,8 +122,6 @@ public class SignUpActivity extends AppCompatActivity {
         startActivity(intent);
         //finishAffinity();
         finish();
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 
     private void performAuth() {
