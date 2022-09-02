@@ -127,7 +127,7 @@
                         android:padding="5dp"
                         android:fontFamily="@font/average_sans"
                         android:gravity="center_vertical"
-                        android:text="TOPU RAYHAN"
+                        android:text="@string/topu_cap"
                         android:textColor="@color/white"
                         android:textSize="25sp"
                         android:textStyle="bold"/>
@@ -138,7 +138,7 @@
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/average_sans"
                         android:gravity="center_vertical"
-                        android:text="App and Web developer"
+                        android:text="@string/work"
                         android:textColor="#CDC7C7"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
@@ -250,7 +250,7 @@
                         android:padding="5dp"
                         android:fontFamily="@font/average_sans"
                         android:gravity="center_vertical"
-                        android:text="IMRAN SYAM"
+                        android:text="@string/imran_cap"
                         android:textColor="@color/white"
                         android:textSize="25sp"
                         android:textStyle="bold"/>
@@ -261,7 +261,7 @@
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/average_sans"
                         android:gravity="center_vertical"
-                        android:text="App and Web developer"
+                        android:text="@string/work"
                         android:textColor="#CDC7C7"
                         android:textSize="18sp"
                         android:textStyle="bold"/>

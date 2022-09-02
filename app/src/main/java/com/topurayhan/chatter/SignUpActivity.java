@@ -18,8 +18,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,8 +31,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.topurayhan.chatter.databinding.ActivitySignupBinding;
-
-import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
     ActivitySignupBinding binding;
@@ -49,7 +49,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     boolean passwordVisible;
     boolean passwordVisible2;
-    int error = 0; boolean count = false;
+    int error = 0;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+";
 
     @SuppressLint("ClickableViewAccessibility")
@@ -176,9 +176,19 @@ public class SignUpActivity extends AppCompatActivity {
                         Log.d("TAG", "createUserWithEmail:success");
 
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String userID = user.getUid();
-                        Log.d("YES", "YES");
-                        updateDatabase(userID, fullName, username, email);
+                        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    String userID = user.getUid();
+                                    Log.d("YES", "YES");
+                                    updateDatabase(userID, fullName, username, email);
+                                }
+                                else{
+                                    Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
                     }
                     else{
                         progressDialog.dismiss();
@@ -239,16 +249,26 @@ public class SignUpActivity extends AppCompatActivity {
                                     Log.d("TAG", "createUserWithEmail:success");
 
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                    String userID = user.getUid();
-                                    Log.d("YES", "YESCheck");
-                                    updateDatabase(userID, fullName, username, email);
+                                    user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()){
+                                                String userID = user.getUid();
+                                                Log.d("YES", "YES");
+                                                updateDatabase(userID, fullName, username, email);
+                                            }
+                                            else{
+                                                Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
                                 }
                                 else{
                                     progressDialog.dismiss();
                                     // If sign in fails, display a message to the user.
                                     Log.d("YES", "NO");
                                     Log.w("TAG", "createUserWithEmail:failure", task2.getException());
-                                    Toast.makeText(SignUpActivity.this, "Registration failed.",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignUpActivity.this, task2.getException().getMessage(), Toast.LENGTH_LONG).show();
                                     //updateUI(null);
                                 }
                             });
@@ -272,9 +292,7 @@ public class SignUpActivity extends AppCompatActivity {
         Log.d("YES", "YESup");
         // Create a new user
         String profileImage = null;
-        HashMap<String, Object> friend = new HashMap<>();
 
-        String friendList = null;
         User user = new User(userID, fullName, username, email, profileImage);
         Log.d("YES", String.valueOf(user));
 
@@ -286,16 +304,16 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
                         Log.d("YES", "YESLo");
+                        Toast.makeText(SignUpActivity.this, "Successfully registered! Verification email sent.", Toast.LENGTH_LONG).show();
                         openLoginActivity();
-                        Toast.makeText(SignUpActivity.this, "Successfully registered!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.w("TAG", "Error adding document", e);
-                    Toast.makeText(SignUpActivity.this, "Registration failed!", Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAG", "Error adding document", e);
+                        Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
 
     }
 }

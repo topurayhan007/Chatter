@@ -4,12 +4,10 @@ import static com.topurayhan.chatter.R.drawable.avatar;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -244,22 +242,16 @@ public class HomeActivity extends AppCompatActivity {
     public void openFriendsActivity(){
         Intent intent = new Intent(this, FriendsActivity.class);
         startActivity(intent);
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 
     public void openSearchActivity(){
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 
     public void openSettingsActivity(){
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 
 }

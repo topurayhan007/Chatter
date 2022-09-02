@@ -219,6 +219,9 @@ public class ChattingActivity extends AppCompatActivity {
                                                                     Log.d("YESsender", senderName);
                                                                     updateLastMessageTime(date.getTime(), senderID, receiverID);
                                                                     sendNotification(senderName, message.getMessage(), token);
+
+                                                                    Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                                                                    vibrator.vibrate(10);
                                                                 }
 
                                                                 @Override
@@ -428,7 +431,5 @@ public class ChattingActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 }

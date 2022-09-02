@@ -2,20 +2,17 @@ package com.topurayhan.chatter;
 
 import static com.topurayhan.chatter.R.drawable.avatar;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -133,60 +130,44 @@ public class SettingsActivity extends AppCompatActivity {
     public void openAboutActivity(){
         Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 
     public void openLoginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finishAffinity();
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 
     public void openFriendsActivity(){
         Intent intent = new Intent(this, FriendsActivity.class);
         startActivity(intent);
         finish();
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 
     public void openSearchActivity(){
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
         finish();
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 
     public void openChatsActivity(){
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finishAffinity();
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 
     public void openAccountSettingsActivity(){
         Intent intent = new Intent(this, AccountSettingsActivity.class);
         startActivity(intent);
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 
     public void openSecuritySettingsActivity(){
         Intent intent = new Intent(this, SecuritySettingsActivity.class);
         startActivity(intent);
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 
     public void openUpdateProfilePictureActivity(){
         Intent intent = new Intent(this, UpdateProfilePictureActivity.class);
         startActivity(intent);
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 }

@@ -1,10 +1,8 @@
 package com.topurayhan.chatter;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.view.View;
 import android.widget.Toast;
 
@@ -104,8 +102,6 @@ public class AccountSettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
         finish();
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 
     public void performAuth(){
@@ -185,8 +181,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
                     binding.confirmButton.setVisibility(View.INVISIBLE);
 
                     Toast.makeText(AccountSettingsActivity.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
-                    Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                    vibrator.vibrate(15);
+
                     progressDialog.dismiss();
 
                 } else {

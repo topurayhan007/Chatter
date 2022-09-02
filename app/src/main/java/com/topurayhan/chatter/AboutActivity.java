@@ -1,10 +1,8 @@
 package com.topurayhan.chatter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -91,8 +89,6 @@ public class AboutActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
         finish();
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(15);
     }
 }
 

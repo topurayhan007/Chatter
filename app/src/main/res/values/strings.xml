@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Chatter</string>
     <string name="chatter">Chatter</string>
     <string name="login">Login</string>
@@ -21,9 +21,12 @@
     <string name="settings">Settings</string>
     <string name="search">Search</string>
     <string name="topuRayhan">Topu Rayhan</string>
+    <string name="topu_cap">TOPU RAYHAN</string>
+    <string name="imran_cap">IMRAN SYAM</string>
     <!--suppress AndroidDomInspection -->
     <string name="topuRayhanUsername">@topurayhan007</string>
-    <string name="search_">Search...</string>
+    <string name="work">App and Web developer</string>
+    <string name="search_" tools:ignore="TypographyEllipsis">Search...</string>
     <string name="account_settings">Account Settings</string>
     <string name="confirm">Confirm</string>
     <string name="new_password">New Password</string>
@@ -31,7 +34,7 @@
     <string name="current_password">Current Password</string>
     <string name="security_settings">Security Settings</string>
     <string name="update_profile_photo">Update Profile Picture</string>
-    <string name="type_msg">Type your message...</string>
+    <string name="type_msg" tools:ignore="TypographyEllipsis">Type your message...</string>
     <string name="at_username">topurayhan007</string>
     <string name="_10_15_am">10:15 AM</string>
     <string name="about">A chatting app made by Topu Rayhan and Imran Syam</string>
