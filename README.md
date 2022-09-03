@@ -8,6 +8,7 @@
 
 ### Functionalities:
    - Able to login
+   - Able to login with Google accounts
    - Login verification
    - Signup verification
    - Unique username verification 
