@@ -55,16 +55,16 @@ public class LoginActivity extends AppCompatActivity {
     private static final int REQ_ONE_TAP = 2;
     GoogleSignInClient googleSignInClient;
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if(currentUser != null){
-//            currentUser.reload();
-//            openHomeActivity();
-//        }
-//    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            currentUser.reload();
+            openHomeActivity();
+        }
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -86,15 +86,15 @@ public class LoginActivity extends AppCompatActivity {
 
         signUp.setOnClickListener(view -> openSignUpActivity());
 
-//        createGoogleSignInRequest();
-//
-//        binding.google.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = googleSignInClient.getSignInIntent();
-//                startActivityForResult(intent, REQ_ONE_TAP);
-//            }
-//        });
+        createGoogleSignInRequest();
+
+        binding.google.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = googleSignInClient.getSignInIntent();
+                startActivityForResult(intent, REQ_ONE_TAP);
+            }
+        });
 
         loginButton.setOnClickListener(view -> {
             // Authenticate then openHomeActivity
@@ -157,6 +157,11 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("TAG", "Got ID token.");
                 AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
 
+                progressDialog.setMessage("Please wait...");
+                progressDialog.setTitle("Logging in");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
+
                 mAuth.signInWithCredential(firebaseCredential)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -167,11 +172,19 @@ public class LoginActivity extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     String userId = user.getUid();
                                     String fullName = account.getGivenName() + " " + account.getFamilyName();
-                                    String username = null;
                                     String email = account.getEmail();
+                                    String[] usernameArray = email.split("@");
+                                    String username = usernameArray[0];
                                     Uri profileImage = account.getPhotoUrl();
 
-                                    updateDatabase(userId, fullName, username, email);
+                                    if (task.getResult().getAdditionalUserInfo().isNewUser()) {
+                                        updateDatabase(userId, fullName, username, email);
+                                    }
+                                    else{
+                                        progressDialog.dismiss();
+                                        Toast.makeText(LoginActivity.this, "Successfully logged in!", Toast.LENGTH_LONG).show();
+                                        openHomeActivity();
+                                    }
 
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -206,7 +219,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
                         Log.d("YES", "YESLo");
-
+                        progressDialog.dismiss();
                         Toast.makeText(LoginActivity.this, "Successfully logged in!", Toast.LENGTH_LONG).show();
                         openHomeActivity();
                     }

@@ -14,6 +14,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
     ActivitySettingsBinding binding;
     FirebaseAuth mAuth;
     FirebaseDatabase database;
+    GoogleSignInClient mGoogleSignInClient;
 
     @SuppressLint("StaticFieldLeak")
     static LinearLayout chatsButton, friendsButton, searchButton, settingsButton;
@@ -95,6 +99,11 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
+
+                GoogleSignIn.getClient(
+                        SettingsActivity.this,
+                        new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+                ).signOut();
                 openLoginActivity();
                 Toast.makeText(SettingsActivity.this, "Successfully logged out!", Toast.LENGTH_SHORT).show();
             }

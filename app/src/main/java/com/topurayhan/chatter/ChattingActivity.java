@@ -172,6 +172,8 @@ public class ChattingActivity extends AppCompatActivity {
         binding.sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(1);
                 String messageInput = binding.messageInput.getText().toString().trim();
                 if (!messageInput.isEmpty()) {
 
@@ -220,8 +222,6 @@ public class ChattingActivity extends AppCompatActivity {
                                                                     updateLastMessageTime(date.getTime(), senderID, receiverID);
                                                                     sendNotification(senderName, message.getMessage(), token);
 
-                                                                    Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                                                                    vibrator.vibrate(10);
                                                                 }
 
                                                                 @Override
