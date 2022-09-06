@@ -71,8 +71,9 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/average_sans"
                 android:text="@string/at_username"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textColor="#CDC7C7"
+                android:textSize="14sp"
+                android:textStyle="normal" />
         </LinearLayout>
 
         <ImageView
