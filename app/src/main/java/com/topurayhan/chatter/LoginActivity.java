@@ -171,7 +171,14 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.d("TAG", "signInWithCredential:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     String userId = user.getUid();
-                                    String fullName = account.getGivenName() + " " + account.getFamilyName();
+                                    String fullName;
+                                    if (account.getFamilyName().isEmpty()){
+                                        fullName = account.getGivenName();
+                                    }
+                                    else {
+                                        fullName = account.getGivenName() + " " + account.getFamilyName();
+                                    }
+
                                     String email = account.getEmail();
                                     String[] usernameArray = email.split("@");
                                     String username = usernameArray[0];
