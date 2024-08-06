@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.pgreze.reactions.ReactionPopup;
 import com.github.pgreze.reactions.ReactionsConfig;
 import com.github.pgreze.reactions.ReactionsConfigBuilder;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -166,13 +164,24 @@ public class MessagesAdapter extends RecyclerView.Adapter{
                 viewHolder.binding.feeling.setVisibility(View.GONE);
             }
 
-            viewHolder.binding.linearLayout.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    popup.onTouch(view, motionEvent);
-                    return false;
-                }
+            viewHolder.binding.linearLayout.setOnLongClickListener(view -> {
+                // Simulate a MotionEvent to pass to the popup
+                MotionEvent event = MotionEvent.obtain(
+                        System.currentTimeMillis(),
+                        System.currentTimeMillis(),
+                        MotionEvent.ACTION_DOWN, // Change to the appropriate action if needed
+                        view.getX(),
+                        view.getY(),
+                        0
+                );
+
+                popup.onTouch(view, event);
+                event.recycle();
+                return true;
             });
+
+
+
         }
         else {
             ReceiveViewHolder viewHolder = (ReceiveViewHolder)holder;
@@ -194,15 +203,12 @@ public class MessagesAdapter extends RecyclerView.Adapter{
             // received message has senderId, goto database find the user whose ID is equal
             // to the senderId and take that users profileImage and set to friendProfileImage
             DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
-            usersRef.child(message.getSenderId()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if (task.isSuccessful()){
-                        DataSnapshot snapshot = task.getResult();
-                        String profilePic = String.valueOf(snapshot.child("profileImage").getValue());
-                        Log.d("YES", profilePic);
-                        Picasso.get().load(profilePic).into(viewHolder.binding.friendProfilePic);
-                    }
+            usersRef.child(message.getSenderId()).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    DataSnapshot snapshot = task.getResult();
+                    String profilePic = String.valueOf(snapshot.child("profileImage").getValue());
+                    Log.d("YES", profilePic);
+                    Picasso.get().load(profilePic).into(viewHolder.binding.friendProfilePic);
                 }
             });
 
@@ -216,13 +222,23 @@ public class MessagesAdapter extends RecyclerView.Adapter{
                 viewHolder.binding.feeling.setVisibility(View.GONE);
             }
 
-            viewHolder.binding.linearLayout.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    popup.onTouch(view, motionEvent);
-                    return false;
-                }
+            viewHolder.binding.linearLayout.setOnLongClickListener(view -> {
+                // Simulate a MotionEvent to pass to the popup
+                MotionEvent event = MotionEvent.obtain(
+                        System.currentTimeMillis(),
+                        System.currentTimeMillis(),
+                        MotionEvent.ACTION_DOWN, // Change to the appropriate action if needed
+                        view.getX(),
+                        view.getY(),
+                        0
+                );
+
+                popup.onTouch(view, event);
+                event.recycle();
+                return true;
             });
+
+
         }
 
     }

@@ -106,7 +106,7 @@ public class FriendsActivity extends AppCompatActivity {
                 users.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()){
                     User user = snapshot1.getValue(User.class);
-                    if(!user.getUserId().equals(mAuth.getUid())){
+                    if (user != null && user.getUserId() != null && !user.getUserId().equals(mAuth.getUid())) {
                         database.getReference().child("users")
                             .child(mAuth.getUid())
                             .child("friendList")

@@ -50,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
                 users.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()){
                     User user = snapshot1.getValue(User.class);
-                    if(!user.getUserId().equals(mAuth.getUid())){
+                    if (user != null && user.getUserId() != null && !user.getUserId().equals(mAuth.getUid())) {
                         users.add(user);
                     }
 
